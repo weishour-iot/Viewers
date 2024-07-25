@@ -99,11 +99,12 @@ function modeFactory({ modeConfiguration }) {
         'MeasurementTools',
         'Zoom',
         'Pan',
-        'TrackballRotate',
+        // 'TrackballRotate',
         'WindowLevel',
         'Capture',
         'Layout',
-        'Crosshairs',
+        // 'Crosshairs',
+        'TagBrowser',
         'MoreTools',
       ]);
 
@@ -183,8 +184,8 @@ function modeFactory({ modeConfiguration }) {
             id: ohif.layout,
             props: {
               leftPanels: [tracked.thumbnailList],
-              rightPanels: [dicomSeg.panel, tracked.measurements],
-              rightPanelClosed: true,
+              rightPanels: [tracked.measurements],
+              // rightPanelClosed: true,
               viewports: [
                 {
                   namespace: tracked.viewport,

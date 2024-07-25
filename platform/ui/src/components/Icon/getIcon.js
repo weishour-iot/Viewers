@@ -82,6 +82,7 @@ import { ReactComponent as uiArrowDown } from './../../assets/icons/ui-arrow-dow
 import { ReactComponent as uiArrowUp } from './../../assets/icons/ui-arrow-up.svg';
 import { ReactComponent as uiArrowLeft } from './../../assets/icons/ui-arrow-left.svg';
 import { ReactComponent as uiArrowRight } from './../../assets/icons/ui-arrow-right.svg';
+import { ReactComponent as loadingGTYLMark } from './../../assets/icons/loading-gtyl-mark.svg';
 import { ReactComponent as loadingOHIFMark } from './../../assets/icons/loading-ohif-mark.svg';
 import { ReactComponent as notificationsInfo } from './../../assets/icons/notifications-info.svg';
 import { ReactComponent as notificationsWarning } from './../../assets/icons/notifications-warning.svg';
@@ -280,6 +281,7 @@ const ICONS = {
   'row-unlock': rowUnlock,
   'checkbox-checked': checkboxChecked,
   'checkbox-unchecked': checkboxUnchecked,
+  'loading-gtyl-mark': loadingGTYLMark,
   'loading-ohif-mark': loadingOHIFMark,
   'notifications-info': notificationsInfo,
   'notifications-error': notificationsError,

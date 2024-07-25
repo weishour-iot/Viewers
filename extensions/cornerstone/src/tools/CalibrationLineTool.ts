@@ -100,8 +100,8 @@ export function onCompletedCalibrationLine(
       },
       false,
       {
-        dialogTitle: 'Calibration',
-        inputLabel: 'Actual Physical distance (mm)',
+        dialogTitle: '校准',
+        inputLabel: '实际物理距离（毫米）',
 
         // the input value must be a number
         validateFunc: val => {

@@ -24,7 +24,7 @@ function callInputDialog(
   const dialogId = 'dialog-enter-annotation';
   const label = data ? (isArrowAnnotateInputDialog ? data.text : data.label) : '';
   const {
-    dialogTitle = 'Annotation',
+    dialogTitle = 'Annoztation',
     inputLabel = 'Enter your annotation',
     validateFunc = value => true,
   } = dialogConfig;
@@ -58,15 +58,15 @@ function callInputDialog(
         noCloseButton: true,
         onClose: () => uiDialogService.dismiss({ id: dialogId }),
         actions: [
-          { id: 'cancel', text: 'Cancel', type: ButtonEnums.type.secondary },
-          { id: 'save', text: 'Save', type: ButtonEnums.type.primary },
+          { id: 'cancel', text: '取消', type: ButtonEnums.type.secondary },
+          { id: 'save', text: '保存', type: ButtonEnums.type.primary },
         ],
         onSubmit: onSubmitHandler,
         body: ({ value, setValue }) => {
           return (
             <Input
               autoFocus
-              className="border-primary-main bg-black"
+              className="bg-black border-primary-main"
               type="text"
               id="annotation"
               label={inputLabel}

@@ -117,11 +117,11 @@ function ViewerLayout({
         appConfig={appConfig}
       />
       <div
-        className="relative flex w-full flex-row flex-nowrap items-stretch overflow-hidden bg-black"
+        className="relative flex flex-row items-stretch w-full overflow-hidden bg-black flex-nowrap"
         style={{ height: 'calc(100vh - 52px' }}
       >
         <React.Fragment>
-          {showLoadingIndicator && <LoadingIndicatorProgress className="h-full w-full bg-black" />}
+          {showLoadingIndicator && <LoadingIndicatorProgress className="w-full h-full bg-black" />}
           {/* LEFT SIDEPANELS */}
           {hasLeftPanels ? (
             <ErrorBoundary context="Left Panel">
@@ -133,8 +133,8 @@ function ViewerLayout({
             </ErrorBoundary>
           ) : null}
           {/* TOOLBAR + GRID */}
-          <div className="flex h-full flex-1 flex-col">
-            <div className="relative flex h-full flex-1 items-center justify-center overflow-hidden bg-black">
+          <div className="flex flex-col flex-1 h-full">
+            <div className="relative flex items-center justify-center flex-1 h-full overflow-hidden bg-black">
               <ErrorBoundary context="Grid">
                 <ViewportGridComp
                   servicesManager={servicesManager}

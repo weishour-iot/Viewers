@@ -1,0 +1,11 @@
+0 silly argv {
+0 silly argv   _: [ 'run' ],
+0 silly argv   stream: true,
+0 silly argv   lernaVersion: '7.4.2',
+0 silly argv   '$0': '/Users/weishour/workspace/iot/Viewers/node_modules/.bin/lerna',
+0 silly argv   script: 'dev:viewer'
+0 silly argv }
+1 notice cli v7.4.2
+2 verbose packageConfigs Explicit "packages" configuration found in lerna.json. Resolving packages using the configured glob(s): ["extensions/*","platform/*","modes/*","addOns/externals/*"]
+3 verbose rootPath /Users/weishour/workspace/iot/Viewers
+4 error

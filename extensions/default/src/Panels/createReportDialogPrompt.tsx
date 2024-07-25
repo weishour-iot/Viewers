@@ -68,7 +68,7 @@ export default function CreateReportDialogPrompt(uiDialogService, { extensionMan
       useLastPosition: false,
       showOverlay: true,
       contentProps: {
-        title: 'Create Report',
+        title: '创建报告',
         value: {
           label: '',
           dataSourceName: extensionManager.activeDataSource,
@@ -76,8 +76,8 @@ export default function CreateReportDialogPrompt(uiDialogService, { extensionMan
         noCloseButton: true,
         onClose: _handleClose,
         actions: [
-          { id: 'cancel', text: 'Cancel', type: ButtonEnums.type.secondary },
-          { id: 'save', text: 'Save', type: ButtonEnums.type.primary },
+          { id: 'cancel', text: '取消', type: ButtonEnums.type.secondary },
+          { id: 'save', text: '保存', type: ButtonEnums.type.primary },
         ],
         // TODO: Should be on button press...
         onSubmit: _handleFormSubmit,
@@ -102,7 +102,7 @@ export default function CreateReportDialogPrompt(uiDialogService, { extensionMan
                   <label className="text-[14px] leading-[1.2] text-white">Data Source</label>
                   <Select
                     closeMenuOnSelect={true}
-                    className="border-primary-main  mt-2 bg-black"
+                    className="mt-2 bg-black border-primary-main"
                     options={dataSourcesOpts}
                     placeholder={
                       dataSourcesOpts.find(option => option.value === value.dataSourceName)
@@ -119,9 +119,9 @@ export default function CreateReportDialogPrompt(uiDialogService, { extensionMan
               <div className="mt-3">
                 <Input
                   autoFocus
-                  label="Enter the report name"
+                  label="输入报告名称"
                   labelClassName="text-white text-[14px] leading-[1.2]"
-                  className="border-primary-main bg-black"
+                  className="bg-black border-primary-main"
                   type="text"
                   value={value.label}
                   onChange={onChangeHandler}

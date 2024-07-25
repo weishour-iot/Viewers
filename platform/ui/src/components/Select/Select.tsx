@@ -31,7 +31,7 @@ const Option = props => {
         </div>
         <label
           id={props.data.value}
-          className="ml-3 mt-1"
+          className="mt-1 ml-3"
         >
           <span>{props.value}</span>
         </label>

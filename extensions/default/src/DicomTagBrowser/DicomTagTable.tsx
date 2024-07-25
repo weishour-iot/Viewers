@@ -21,36 +21,36 @@ function ColumnHeaders({ tagRef, vrRef, keywordRef, valueRef }) {
       )}
       style={rowVerticalPaddingStyle}
     >
-      <div className="w-4/24 px-3">
+      <div className="px-3 w-4/24">
         <label
           ref={tagRef}
-          className="flex flex-1 select-none flex-col pl-1 text-lg text-white"
+          className="flex flex-col flex-1 pl-1 text-lg text-white select-none"
         >
-          <span className="flex flex-row items-center focus:outline-none">Tag</span>
+          <span className="flex flex-row items-center focus:outline-none">标签</span>
         </label>
       </div>
-      <div className="w-2/24 px-3">
+      <div className="px-3 w-2/24">
         <label
           ref={vrRef}
-          className="flex flex-1 select-none flex-col pl-1 text-lg text-white"
+          className="flex flex-col flex-1 pl-1 text-lg text-white select-none"
         >
-          <span className="flex flex-row items-center focus:outline-none">VR</span>
+          <span className="flex flex-row items-center w-14 focus:outline-none">值表示</span>
         </label>
       </div>
-      <div className="w-6/24 px-3">
+      <div className="px-3 w-6/24">
         <label
           ref={keywordRef}
-          className="flex flex-1 select-none flex-col pl-1 text-lg text-white"
+          className="flex flex-col flex-1 pl-1 text-lg text-white select-none"
         >
-          <span className="flex flex-row items-center focus:outline-none">Keyword</span>
+          <span className="flex flex-row items-center focus:outline-none">键</span>
         </label>
       </div>
-      <div className="w-5/24 grow px-3">
+      <div className="px-3 w-5/24 grow">
         <label
           ref={valueRef}
-          className="flex flex-1 select-none flex-col pl-1 text-lg text-white"
+          className="flex flex-col flex-1 pl-1 text-lg text-white select-none"
         >
-          <span className="flex flex-row items-center focus:outline-none">Value</span>
+          <span className="flex flex-row items-center focus:outline-none">值</span>
         </label>
       </div>
     </div>
@@ -129,10 +129,10 @@ function DicomTagTable({ rows }) {
           )}
           key={`DICOMTagRow-${index}`}
         >
-          <div className="w-4/24 px-3">{row[0]}</div>
-          <div className="w-2/24 px-3">{row[1]}</div>
-          <div className="w-6/24 px-3">{row[2]}</div>
-          <div className="w-5/24 grow px-3">{row[3]}</div>
+          <div className="px-3 w-4/24">{row[0]}</div>
+          <div className="px-3 w-2/24">{row[1]}</div>
+          <div className="px-3 w-6/24">{row[2]}</div>
+          <div className="px-3 w-5/24 grow">{row[3]}</div>
         </div>
       );
     },
@@ -187,7 +187,7 @@ function DicomTagTable({ rows }) {
         valueRef={valueRef}
       />
       <div
-        className="relative m-auto border-2 border-black bg-black"
+        className="relative m-auto bg-black border-2 border-black"
         style={{ height: '32rem' }}
       >
         {isHeaderRendered() && (

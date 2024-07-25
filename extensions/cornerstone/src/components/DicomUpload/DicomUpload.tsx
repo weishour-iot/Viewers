@@ -34,7 +34,7 @@ function DicomUpload({ dataSource, onComplete, onStarted }: DicomUploadProps): R
         {({ getRootProps }) => (
           <div
             {...getRootProps()}
-            className="dicom-upload-drop-area-border-dash m-5 flex h-full flex-col items-center justify-center"
+            className="flex flex-col items-center justify-center h-full m-5 dicom-upload-drop-area-border-dash"
           >
             <div className="flex gap-3">
               <Dropzone
@@ -47,7 +47,7 @@ function DicomUpload({ dataSource, onComplete, onStarted }: DicomUploadProps): R
                       disabled={false}
                       onClick={() => {}}
                     >
-                      {'Add files'}
+                      {'选择文件'}
                       <input {...getInputProps()} />
                     </Button>
                   </div>
@@ -64,7 +64,7 @@ function DicomUpload({ dataSource, onComplete, onStarted }: DicomUploadProps): R
                       disabled={false}
                       onClick={() => {}}
                     >
-                      {'Add folder'}
+                      {'选择目录'}
                       <input
                         {...getInputProps()}
                         webkitdirectory="true"
@@ -75,8 +75,8 @@ function DicomUpload({ dataSource, onComplete, onStarted }: DicomUploadProps): R
                 )}
               </Dropzone>
             </div>
-            <div className="pt-5">or drag images or folders here</div>
-            <div className="text-aqua-pale pt-3 text-lg">(DICOM files supported)</div>
+            <div className="pt-5">或将图片或文件夹拖到这里</div>
+            <div className="pt-3 text-lg text-aqua-pale">(支持 DICOM 文件)</div>
           </div>
         )}
       </Dropzone>

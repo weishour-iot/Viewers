@@ -41,7 +41,7 @@ function _askTrackMeasurements(
   return new Promise(function (resolve, reject) {
     const message = i18n.t('MeasurementTable:Track measurements for this series?');
     const actions = [
-      { type: 'cancel', text: i18n.t('MeasurementTable:No'), value: RESPONSE.CANCEL },
+      { type: 'secondary', text: i18n.t('MeasurementTable:No'), value: RESPONSE.CANCEL },
       {
         type: 'secondary',
         text: i18n.t('MeasurementTable:No, do not ask again'),
@@ -84,17 +84,17 @@ function _askSaveDiscardOrCancel(
 ) {
   return new Promise(function (resolve, reject) {
     const message =
-      'Measurements cannot span across multiple studies. Do you want to save your tracked measurements?';
+      '测量不能跨多个检查，是否要保存跟踪的测量值？';
     const actions = [
-      { type: 'cancel', text: 'Cancel', value: RESPONSE.CANCEL },
+      { type: 'secondary', text: '取消', value: RESPONSE.CANCEL },
       {
         type: 'secondary',
-        text: 'No, discard previously tracked series & measurements',
+        text: '否，丢弃之前跟踪的系列和测量值',
         value: RESPONSE.SET_STUDY_AND_SERIES,
       },
       {
         type: 'primary',
-        text: 'Yes',
+        text: '是',
         value: RESPONSE.CREATE_REPORT,
       },
     ];

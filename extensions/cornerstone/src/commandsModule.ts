@@ -408,7 +408,7 @@ function commandsModule({
       if (uiModalService) {
         uiModalService.show({
           content: CornerstoneViewportDownloadForm,
-          title: 'Download High Quality Image',
+          title: '下载高质量图像',
           contentProps: {
             activeViewportId,
             onClose: uiModalService.hide,

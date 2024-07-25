@@ -450,7 +450,7 @@ const commandsModule = ({
           onClose: UIModalService.hide,
         },
         containerDimensions: 'w-[70%] max-w-[900px]',
-        title: 'DICOM Tag Browser',
+        title: 'DICOM标签浏览',
       });
     },
 

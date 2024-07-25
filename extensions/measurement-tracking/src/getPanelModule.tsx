@@ -9,23 +9,22 @@ import i18n from 'i18next';
 function getPanelModule({ commandsManager, extensionManager, servicesManager }): Types.Panel[] {
   return [
     {
-      name: 'seriesList',
-      iconName: 'tab-studies',
-      iconLabel: 'Studies',
-      label: i18n.t('SidePanel:Studies'),
-      component: PanelStudyBrowserTracking.bind(null, {
-        commandsManager,
-        extensionManager,
-        servicesManager,
-      }),
-    },
-
-    {
       name: 'trackedMeasurements',
       iconName: 'tab-linear',
       iconLabel: 'Measure',
       label: i18n.t('SidePanel:Measurements'),
       component: PanelMeasurementTableTracking.bind(null, {
+        commandsManager,
+        extensionManager,
+        servicesManager,
+      }),
+    },
+    {
+      name: 'seriesList',
+      iconName: 'tab-studies',
+      iconLabel: 'Studies',
+      label: i18n.t('SidePanel:Studies'),
+      component: PanelStudyBrowserTracking.bind(null, {
         commandsManager,
         extensionManager,
         servicesManager,

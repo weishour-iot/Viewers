@@ -6,11 +6,14 @@
   "NonTargets": "非靶向",
   "Relabel": "重新标记",
   "Measurements": "测量",
+  "No, do not ask again": "否，不再询问",
   "Targets": "靶向",
   "Export CSV": "导出CSV",
   "No tracked measurements": "没有跟踪的测量值",
   "Export": "导出",
   "Create Report": "新建报告",
   "Do you want to add this measurement to the existing report?": "将测量添加到报告中？",
-  "Track measurements for this series?": "要对个序列进行跟踪吗？"
+  "No": "否",
+  "Track measurements for this series?": "对序列的测量值进行跟踪?",
+  "Yes": "是"
 }

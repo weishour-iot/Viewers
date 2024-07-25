@@ -393,24 +393,22 @@ function PanelStudyBrowserTracking({
       showOverlay: true,
       content: Dialog,
       contentProps: {
-        title: 'Untrack Series',
+        title: '取消跟踪序列',
         body: () => (
-          <div className="bg-primary-dark p-4 text-white">
-            <p>Are you sure you want to untrack this series?</p>
-            <p className="mt-2">
-              This action cannot be undone and will delete all your existing measurements.
-            </p>
+          <div className="p-4 text-white bg-primary-dark">
+            <p>您确定要取消跟踪该系列吗？</p>
+            <p className="mt-2">此操作无法撤消，并将删除所有现有测量值。</p>
           </div>
         ),
         actions: [
           {
             id: 'cancel',
-            text: 'Cancel',
+            text: '取消',
             type: ButtonEnums.type.secondary,
           },
           {
             id: 'yes',
-            text: 'Yes',
+            text: '确定',
             type: ButtonEnums.type.primary,
             classes: ['untrack-yes-button'],
           },
@@ -444,7 +442,7 @@ function PanelStudyBrowserTracking({
       onClickUntrack={displaySetInstanceUID => {
         onClickUntrack(displaySetInstanceUID);
       }}
-      onClickThumbnail={() => { }}
+      onClickThumbnail={() => {}}
       onDoubleClickThumbnail={onDoubleClickThumbnailHandler}
       activeDisplaySetInstanceUIDs={activeViewportDisplaySetInstanceUIDs}
     />
@@ -560,7 +558,7 @@ function _mapDisplaySets(
               contentProps: {
                 title: 'Delete Report',
                 body: () => (
-                  <div className="bg-primary-dark p-4 text-white">
+                  <div className="p-4 text-white bg-primary-dark">
                     <p>Are you sure you want to delete this report?</p>
                     <p className="mt-2">This action cannot be undone.</p>
                   </div>

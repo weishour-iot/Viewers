@@ -230,7 +230,7 @@ function TrackedCornerstoneViewport(props: withAppTypes) {
 
   return (
     <>
-      <div className="relative flex h-full w-full flex-row overflow-hidden">
+      <div className="relative flex flex-row w-full h-full overflow-hidden">
         {getCornerstoneViewport()}
       </div>
     </>
@@ -324,19 +324,15 @@ function _getStatusComponent(isTracked, t) {
             <div className="flex pt-1">
               <Icon
                 name="info-link"
-                className="text-primary-main w-4"
+                className="w-4 text-primary-main"
               />
             </div>
-            <div className="ml-4 flex">
-              <span className="text-common-light text-base">
+            <div className="flex ml-4">
+              <span className="text-base text-common-light">
                 {isTracked ? (
-                  <>{t('Series is tracked and can be viewed in the measurement panel')}</>
+                  <>{'列已被跟踪，可以在测量面板中查看'}</>
                 ) : (
-                  <>
-                    {t(
-                      'Measurements for untracked series will not be shown in the measurements panel'
-                    )}
-                  </>
+                  <>{'未跟踪系列的测量值不会显示在测量面板中'}</>
                 )}
               </span>
             </div>

@@ -220,7 +220,7 @@ function PanelMeasurementTableTracking({ servicesManager, extensionManager }: wi
             t={t}
             actions={[
               {
-                label: 'Download CSV',
+                label: 'Export CSV',
                 onClick: exportReport,
               },
               {

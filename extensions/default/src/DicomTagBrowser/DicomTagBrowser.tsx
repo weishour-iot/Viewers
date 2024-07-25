@@ -108,13 +108,13 @@ const DicomTagBrowser = ({ displaySets, displaySetInstanceUID }) => {
 
   return (
     <div className="dicom-tag-browser-content">
-      <div className="mb-6 flex flex-row items-center pl-1">
-        <div className="flex w-1/2 flex-row items-center">
+      <div className="flex flex-row items-center pl-1 mb-6">
+        <div className="flex flex-row items-center w-1/2">
           <Typography
             variant="subtitle"
             className="mr-4"
           >
-            Series
+            序列
           </Typography>
           <div className="mr-8 grow">
             <Select
@@ -127,13 +127,13 @@ const DicomTagBrowser = ({ displaySets, displaySetInstanceUID }) => {
             />
           </div>
         </div>
-        <div className="flex w-1/2 flex-row items-center">
+        <div className="flex flex-row items-center w-1/2">
           {showInstanceList && (
             <Typography
               variant="subtitle"
               className="mr-4"
             >
-              Instance Number
+              实例编号
             </Typography>
           )}
           {showInstanceList && (
@@ -155,11 +155,11 @@ const DicomTagBrowser = ({ displaySets, displaySetInstanceUID }) => {
           )}
         </div>
       </div>
-      <div className="h-1 w-full bg-black"></div>
-      <div className="my-3 flex w-1/2 flex-row">
+      <div className="w-full h-1 bg-black"></div>
+      <div className="flex flex-row w-1/2 my-3">
         <InputFilterText
-          className="mr-8 block w-full"
-          placeholder="Search metadata..."
+          className="block w-full mr-8"
+          placeholder="搜索元数据..."
           onDebounceChange={setFilterValue}
         ></InputFilterText>
       </div>

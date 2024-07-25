@@ -36,21 +36,21 @@ function promptTrackNewSeries({ servicesManager, extensionManager }, ctx, evt) {
 
 function _askShouldAddMeasurements(uiViewportDialogService, viewportId) {
   return new Promise(function (resolve, reject) {
-    const message = 'Do you want to add this measurement to the existing report?';
+    const message = '将测量添加到报告中？';
     const actions = [
       {
         type: ButtonEnums.type.secondary,
-        text: 'Cancel',
+        text: '取消',
         value: RESPONSE.CANCEL,
       },
       {
         type: ButtonEnums.type.primary,
-        text: 'Create new report',
+        text: '创建新报告',
         value: RESPONSE.CREATE_REPORT,
       },
       {
         type: ButtonEnums.type.primary,
-        text: 'Add to existing report',
+        text: '添加到现有报告',
         value: RESPONSE.ADD_SERIES,
       },
     ];
@@ -75,18 +75,17 @@ function _askShouldAddMeasurements(uiViewportDialogService, viewportId) {
 
 function _askSaveDiscardOrCancel(UIViewportDialogService, viewportId) {
   return new Promise(function (resolve, reject) {
-    const message =
-      'You have existing tracked measurements. What would you like to do with your existing tracked measurements?';
+    const message = '已经存在跟踪的测量，如何处理这些测量数据？';
     const actions = [
-      { type: 'cancel', text: 'Cancel', value: RESPONSE.CANCEL },
+      { type: 'cancel', text: '取消', value: RESPONSE.CANCEL },
       {
         type: 'secondary',
-        text: 'Save',
+        text: '保存',
         value: RESPONSE.CREATE_REPORT,
       },
       {
         type: 'primary',
-        text: 'Discard',
+        text: '放弃',
         value: RESPONSE.SET_STUDY_AND_SERIES,
       },
     ];

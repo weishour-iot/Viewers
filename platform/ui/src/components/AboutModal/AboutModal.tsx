@@ -75,65 +75,19 @@ const AboutModal = ({ buildNumber, versionNumber, commitHash }) => {
   );
   return (
     <div>
-      {renderRowTitle(t('Important links'))}
-      <div className="mb-8 flex">
-        <Link
-          href="https://community.ohif.org/"
-          showIcon={true}
-        >
-            {t('Visit the forum')}
-        </Link>
-        <span className="ml-4">
-          <Link
-            href="https://github.com/OHIF/Viewers/issues/new/choose"
-            showIcon={true}
-          >
-            {t('Report an issue')}
-          </Link>
-        </span>
-        <span className="ml-4">
-          <Link
-            href="https://ohif.org/"
-            showIcon={true}
-          >
-          {t('More details')}
-          </Link>
-        </span>
+      <div className="mb-8 flex flex-col">
+        <span>由杭杭州光拓医疗器械有限公司技术支持</span>
       </div>
-
+      {renderRowTitle('制造商')}
+      <div className="mb-8 flex flex-col">
+        <span>杭州光拓医疗器械有限公司</span>
+      </div>
       {renderRowTitle(t('Version information'))}
       <div className="flex flex-col">
-        <Row
-          title={t('Repository URL')}
-          value="https://github.com/OHIF/Viewers/"
-          link="https://github.com/OHIF/Viewers/"
-        />
-        <Row
-          title={t('Data citation')}
-          value="https://github.com/OHIF/Viewers/blob/master/DATACITATION.md"
-          link="https://github.com/OHIF/Viewers/blob/master/DATACITATION.md"
-        />
-        {/* <Row
-          title={t('Last master commits')}
-          value="https://github.com/OHIF/Viewers/"
-          link="https://github.com/OHIF/Viewers/"
-        /> */}
         <Row
           title={t('Version number')}
           value={versionNumber}
         />
-        {buildNumber && (
-          <Row
-            title={t('Build number')}
-            value={buildNumber}
-          />
-        )}
-        {commitHash && (
-          <Row
-            title={t('Commit hash')}
-            value={commitHash}
-          />
-        )}
         <Row
           title={t('Browser')}
           value={browser}

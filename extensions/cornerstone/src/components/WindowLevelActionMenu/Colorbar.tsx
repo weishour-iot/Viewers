@@ -101,10 +101,10 @@ export function Colorbar({
   }, [viewportId]);
 
   return (
-    <div className="all-in-one-menu-item flex w-full justify-center">
+    <div className="flex justify-center w-full all-in-one-menu-item">
       <div className="mr-2 w-[28px]"></div>
       <SwitchButton
-        label="Display Color bar"
+        label="显示颜色栏"
         checked={showColorbar}
         onChange={() => {
           onSetColorbar();

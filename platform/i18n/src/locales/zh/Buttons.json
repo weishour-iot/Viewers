@@ -64,5 +64,17 @@
   "Themes": "主题",
   "W/L Presets": "窗位预设",
   "Window Level": "窗位",
+  "Freehand ROI": "手绘ROI",
+  "Spline ROI": "样条ROI",
+  "Livewire tool": "活线工具",
+  "Image Slice Sync": "图像切片同步",
+  "Image Overlay": "图像叠加",
+  "Cobb Angle": "柯氏角",
+  "Zoom-in": "放大",
+  "Calibration": "校准",
+  "Dicom Tag Browser": "Dicom标签浏览",
+  "Magnify Probe": "放大探头",
+  "Ultrasound Directional": "超声波定向",
+  "Window Level Region": "窗口级别区域",
   "Zoom": "放大"
 }

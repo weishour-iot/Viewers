@@ -49,12 +49,12 @@ export class SelectTree extends Component<PropType> {
     const treeItems = this.getTreeItems();
 
     return (
-      <div className="max-h-80 w-80 text-base leading-7">
-        <div className="bg-primary-dark relative flex max-h-80 w-full flex-col overflow-hidden rounded-lg border-0 text-white outline-none drop-shadow-lg focus:outline-none">
+      <div className="text-base leading-7 max-h-80 w-80">
+        <div className="relative flex flex-col w-full overflow-hidden text-white border-0 rounded-lg outline-none bg-primary-dark max-h-80 drop-shadow-lg focus:outline-none">
           {this.headerItem()}
 
           {this.props.items.length > 0 && (
-            <div className="ohif-scrollbar h-full overflow-auto">
+            <div className="h-full overflow-auto ohif-scrollbar">
               {this.state.currentNode && (
                 <SelectTreeBreadcrumb
                   onSelected={this.onBreadcrumbSelected}
@@ -172,9 +172,9 @@ export class SelectTree extends Component<PropType> {
     const title = this.props.selectTreeFirstTitle;
 
     return (
-      <div className="flex flex-col justify-between border-b-2 border-solid border-black p-4 ">
-        <div className="text-primary-active m-0 mb-5 p-2 leading-tight">
-          <span className="text-primary-light align-sub text-xl">{title}</span>
+      <div className="flex flex-col justify-between p-4 border-b-2 border-black border-solid">
+        <div className="p-2 m-0 mb-5 leading-tight text-primary-active">
+          <span className="text-xl text-primary-light align-sub">{title}</span>
           <div className="float-right">
             <Icon
               name="icon-close"
@@ -185,7 +185,7 @@ export class SelectTree extends Component<PropType> {
           </div>
         </div>
         {this.props.searchEnabled && (
-          <div className="flex w-full flex-col">
+          <div className="flex flex-col w-full">
             {this.props.items.length > 0 && (
               <div className="absolute mt-2 mr-2.5 mb-3 ml-3 h-4 w-4">
                 <Icon
@@ -197,8 +197,8 @@ export class SelectTree extends Component<PropType> {
             <input
               data-cy="input-annotation"
               type="text"
-              className={`border-primary-main border-primary-main appearance-none rounded border bg-black bg-black py-2 pr-3 text-sm leading-tight shadow transition duration-300 hover:border-gray-500 focus:border-gray-500 focus:outline-none focus:outline-none ${inputLeftPadding}`}
-              placeholder={this.props.items.length > 0 ? 'Search labels' : 'Enter label'}
+              className={`border-primary-main border-primary-main appearance-none rounded border bg-black py-2 pr-3 text-sm leading-tight shadow transition duration-300 hover:border-gray-500 focus:border-gray-500 focus:outline-none ${inputLeftPadding}`}
+              placeholder={this.props.items.length > 0 ? '搜索标签' : '输入标签'}
               autoFocus={this.props.autoFocus}
               onChange={this.searchLocations}
               value={this.state.searchTerm ? this.state.searchTerm : ''}

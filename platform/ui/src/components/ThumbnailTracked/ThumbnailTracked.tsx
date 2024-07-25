@@ -36,7 +36,7 @@ function ThumbnailTracked({
       className={classnames('flex flex-1 cursor-pointer flex-row px-3 outline-none', className)}
       id={`thumbnail-${displaySetInstanceUID}`}
     >
-      <div className="flex-2 flex flex-col items-center">
+      <div className="flex flex-col items-center flex-2">
         <div
           className={classnames(
             'relative mb-2 flex cursor-pointer flex-col items-center justify-start p-2',
@@ -46,17 +46,17 @@ function ThumbnailTracked({
           <Tooltip
             position="right"
             content={
-              <div className="flex flex-1 flex-row">
-                <div className="flex-2 flex items-center justify-center pr-4">
+              <div className="flex flex-row flex-1">
+                <div className="flex items-center justify-center pr-4 flex-2">
                   <Icon
                     name="info-link"
                     className="text-primary-active"
                   />
                 </div>
-                <div className="flex flex-1 flex-col">
+                <div className="flex flex-col flex-1">
                   <span>
                     <span className="text-white">
-                      {isTracked ? t('Series is tracked') : t('Series is untracked')}
+                      {isTracked ? '系列正在追踪' : '系列尚未追踪'}
                     </span>
                   </span>
                 </div>
@@ -65,7 +65,7 @@ function ThumbnailTracked({
           >
             <Icon
               name={trackedIcon}
-              className="text-primary-light mb-2 w-4"
+              className="w-4 mb-2 text-primary-light"
             />
           </Tooltip>
         </div>
@@ -73,7 +73,7 @@ function ThumbnailTracked({
           <div onClick={onClickUntrack}>
             <Icon
               name="cancel"
-              className="text-primary-active w-4"
+              className="w-4 text-primary-active"
             />
           </div>
         )}

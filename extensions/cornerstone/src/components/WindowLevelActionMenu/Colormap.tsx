@@ -84,7 +84,7 @@ export function Colormap({
   return (
     <>
       {buttons.length > 1 && (
-        <div className="all-in-one-menu-item flex w-full justify-center">
+        <div className="flex justify-center w-full all-in-one-menu-item">
           <ButtonGroup
             onActiveIndexChange={index => {
               setActiveDisplaySet(displaySets[index]);
@@ -108,9 +108,9 @@ export function Colormap({
           </ButtonGroup>
         </div>
       )}
-      <div className="all-in-one-menu-item flex w-full justify-center">
+      <div className="flex justify-center w-full all-in-one-menu-item">
         <SwitchButton
-          label="Preview in viewport"
+          label="在窗口中预览"
           checked={showPreview}
           onChange={checked => {
             setShowPreview(checked);
