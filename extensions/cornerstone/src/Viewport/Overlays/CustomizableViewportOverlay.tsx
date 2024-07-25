@@ -45,48 +45,131 @@ const OverlayItemComponents = {
   'ohif.overlayItem.instanceNumber': InstanceNumberOverlayItem,
 };
 
+// 病患姓名
+const patientNameItem = {
+  id: 'PatientName',
+  customizationType: 'ohif.overlayItem',
+  label: 'PN:',
+  title: 'Patient Name',
+  condition: ({ instance }) => {
+    console.log(instance);
+    return instance && instance.PatientName && instance.PatientName.Alphabetic;
+  },
+  contentF: ({ instance, formatters: { formatPN } }) => instance.PatientName.Alphabetic,
+};
 
+// 病患ID
+const patientIDItem = {
+  id: 'PatientID',
+  customizationType: 'ohif.overlayItem',
+  label: 'MRN:',
+  title: 'Patient ID',
+  condition: ({ referenceInstance }) => referenceInstance && referenceInstance.PatientID,
+  contentF: ({ referenceInstance }) => referenceInstance.PatientID,
+};
+
+// 病患年龄
+const patientAgeItem = {
+  id: 'PatientAge',
+  customizationType: 'ohif.overlayItem',
+  label: 'Age:',
+  title: 'Patient Age',
+  condition: ({ referenceInstance }) => referenceInstance && '037Y',
+  contentF: ({ referenceInstance }) => '037Y',
+};
+
+// 检查日期
 const studyDateItem = {
   id: 'StudyDate',
   customizationType: 'ohif.overlayItem',
-  label: '',
-  title: 'Study date',
+  label: 'Study Date:',
+  title: 'Study Date',
   condition: ({ referenceInstance }) => referenceInstance?.StudyDate,
-  contentF: ({ referenceInstance, formatters: { formatDate } }) => formatDate(referenceInstance.StudyDate),
+  contentF: ({ referenceInstance, formatters: { formatDate } }) =>
+    formatDate(referenceInstance.StudyDate, 'DD-MMM-YYYY'),
 };
 
+// 实例时间
+const instanceCreationTimeItem = {
+  id: 'InstanceCreationTime',
+  customizationType: 'ohif.overlayItem',
+  label: 'IM Time:',
+  title: 'Study Date',
+  condition: ({ referenceInstance }) => referenceInstance?.InstanceCreationTime,
+  contentF: ({ referenceInstance, formatters: { formatDate } }) =>
+    formatDate(referenceInstance.InstanceCreationTime, 'HH:MM:SS'),
+};
+
+// 序列编号
+const seriesNumberItem = {
+  id: 'SeriesNumber',
+  customizationType: 'ohif.overlayItem',
+  label: 'SE:',
+  title: 'Series Number',
+  condition: ({ referenceInstance }) => referenceInstance && referenceInstance.SeriesNumber,
+  contentF: ({ referenceInstance }) => referenceInstance.SeriesNumber,
+};
+
+// 序列描述
 const seriesDescriptionItem = {
   id: 'SeriesDescription',
   customizationType: 'ohif.overlayItem',
-  label: '',
-  title: 'Series description',
+  label: 'Desc:',
+  title: 'Series Description',
   condition: ({ referenceInstance }) => {
     return referenceInstance && referenceInstance.SeriesDescription;
   },
-  contentF: ({ referenceInstance }) => referenceInstance.SeriesDescription
+  contentF: ({ referenceInstance }) => referenceInstance.SeriesDescription,
 };
 
-const topLeftItems = { id: 'cornerstoneOverlayTopLeft', items: [studyDateItem, seriesDescriptionItem] };
+// 检查编号
+const accessionNumberItem = {
+  id: 'AccessionNumber',
+  customizationType: 'ohif.overlayItem',
+  label: 'ACC:',
+  title: 'Accession Number',
+  condition: ({ referenceInstance }) => referenceInstance && referenceInstance.AccessionNumber,
+  contentF: ({ referenceInstance }) => referenceInstance.AccessionNumber,
+};
 
-const topRightItems = { id: 'cornerstoneOverlayTopRight', items: [] };
+// 左上角
+const topLeftItems = {
+  id: 'cornerstoneOverlayTopLeft',
+  items: [patientNameItem, patientIDItem, patientAgeItem],
+};
 
+// 右上角
+const topRightItems = {
+  id: 'cornerstoneOverlayTopRight',
+  items: [
+    seriesDescriptionItem,
+    accessionNumberItem,
+    studyDateItem,
+    instanceCreationTimeItem,
+    {
+      id: 'ZoomLevel',
+      customizationType: 'ohif.overlayItem.zoomLevel',
+      // condition: props => {
+      //   const activeToolName = props.toolGroupService.getActiveToolForViewport(props.viewportId);
+      //   return activeToolName === 'Zoom';
+      // },
+    },
+  ],
+};
+
+// 左下角
 const bottomLeftItems = {
-  id: 'cornerstoneOverlayBottomLeft', items: [
+  id: 'cornerstoneOverlayBottomLeft',
+  items: [
+    seriesNumberItem,
     {
       id: 'WindowLevel',
       customizationType: 'ohif.overlayItem.windowLevel',
     },
-    {
-      id: 'ZoomLevel',
-      customizationType: 'ohif.overlayItem.zoomLevel',
-      condition: (props) => {
-        const activeToolName = props.toolGroupService.getActiveToolForViewport(props.viewportId);
-        return activeToolName === 'Zoom';
-      },
-    },
-  ]
+  ],
 };
 
+// 右下角
 const bottomRightItems = {
   id: 'cornerstoneOverlayBottomRight',
   items: [
@@ -94,7 +177,7 @@ const bottomRightItems = {
       id: 'InstanceNumber',
       customizationType: 'ohif.overlayItem.instanceNumber',
     },
-  ]
+  ],
 };
 
 /**
@@ -307,7 +390,8 @@ function CustomizableViewportOverlay({
         <>
           {items.map((item, index) => (
             <div key={`${keyPrefix}_${index}`}>
-              {(!item?.condition || item.condition(props)) && _renderOverlayItem(item, props) || null}
+              {((!item?.condition || item.condition(props)) && _renderOverlayItem(item, props)) ||
+                null}
             </div>
           ))}
         </>
@@ -315,7 +399,6 @@ function CustomizableViewportOverlay({
     },
     [_renderOverlayItem]
   );
-
 
   return (
     <ViewportOverlay
@@ -335,7 +418,9 @@ function getDisplaySets(viewportData, displaySetService) {
   if (!viewportData?.data?.length) {
     return null;
   }
-  const displaySets = viewportData.data.map(datum => displaySetService.getDisplaySetByUID(datum.displaySetInstanceUID)).filter(it => !!it);
+  const displaySets = viewportData.data
+    .map(datum => displaySetService.getDisplaySetByUID(datum.displaySetInstanceUID))
+    .filter(it => !!it);
   if (!displaySets.length) {
     return null;
   }
@@ -439,13 +524,14 @@ function OverlayItem(props) {
   }
   return (
     <div
-      className="overlay-item flex flex-row"
+      className="flex flex-row overlay-item"
       style={{ color, background }}
       title={title}
     >
-      {label ? (<span className="mr-1 shrink-0">{label}</span>) : null}
+      {label ? <span className="mr-1 shrink-0">{label}</span> : null}
       <span className="ml-1 mr-2 shrink-0">{value}</span>
-    </div>);
+    </div>
+  );
 }
 
 /**
@@ -459,7 +545,7 @@ function VOIOverlayItem({ voi, customization }: OverlayItemProps) {
 
   return (
     <div
-      className="overlay-item flex flex-row"
+      className="flex flex-row overlay-item"
       style={{ color: customization?.color }}
     >
       <span className="mr-1 shrink-0">W:</span>
@@ -476,11 +562,11 @@ function VOIOverlayItem({ voi, customization }: OverlayItemProps) {
 function ZoomOverlayItem({ scale, customization }: OverlayItemProps) {
   return (
     <div
-      className="overlay-item flex flex-row"
+      className="flex flex-row overlay-item"
       style={{ color: (customization && customization.color) || undefined }}
     >
       <span className="mr-1 shrink-0">Zoom:</span>
-      <span>{scale.toFixed(2)}x</span>
+      <span className="mr-2 shrink-0">{scale.toFixed(2)}x</span>
     </div>
   );
 }
@@ -497,13 +583,13 @@ function InstanceNumberOverlayItem({
 
   return (
     <div
-      className="overlay-item flex flex-row"
+      className="flex flex-row overlay-item"
       style={{ color: (customization && customization.color) || undefined }}
     >
-      <span>
+      <span className="mr-2 shrink-0">
         {instanceNumber !== undefined && instanceNumber !== null ? (
           <>
-            <span className="mr-1 shrink-0">I:</span>
+            <span className="mr-1 shrink-0">IM:</span>
             <span>{`${instanceNumber} (${imageIndex + 1}/${numberOfSlices})`}</span>
           </>
         ) : (
