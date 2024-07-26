@@ -52,7 +52,6 @@ const patientNameItem = {
   label: 'PN:',
   title: 'Patient Name',
   condition: ({ instance }) => {
-    console.log(instance);
     return instance && instance.PatientName && instance.PatientName.Alphabetic;
   },
   contentF: ({ instance, formatters: { formatPN } }) => instance.PatientName.Alphabetic,
@@ -74,8 +73,18 @@ const patientAgeItem = {
   customizationType: 'ohif.overlayItem',
   label: 'Age:',
   title: 'Patient Age',
-  condition: ({ referenceInstance }) => referenceInstance && '037Y',
-  contentF: ({ referenceInstance }) => '037Y',
+  condition: ({ referenceInstance }) => referenceInstance && referenceInstance.PatientAge,
+  contentF: ({ referenceInstance }) => referenceInstance.PatientAge,
+};
+
+// 病患性别
+const PatientSexItem = {
+  id: 'PatientSex',
+  customizationType: 'ohif.overlayItem',
+  label: 'Sex:',
+  title: 'Patient Sex',
+  condition: ({ referenceInstance }) => referenceInstance && referenceInstance.PatientSex,
+  contentF: ({ referenceInstance }) => referenceInstance.PatientSex,
 };
 
 // 检查日期
@@ -96,8 +105,8 @@ const instanceCreationTimeItem = {
   label: 'IM Time:',
   title: 'Study Date',
   condition: ({ referenceInstance }) => referenceInstance?.InstanceCreationTime,
-  contentF: ({ referenceInstance, formatters: { formatDate } }) =>
-    formatDate(referenceInstance.InstanceCreationTime, 'HH:MM:SS'),
+  contentF: ({ referenceInstance, formatters: { formatTime } }) =>
+    formatTime(referenceInstance.InstanceCreationTime, 'HH:MM:SS'),
 };
 
 // 序列编号
@@ -135,7 +144,7 @@ const accessionNumberItem = {
 // 左上角
 const topLeftItems = {
   id: 'cornerstoneOverlayTopLeft',
-  items: [patientNameItem, patientIDItem, patientAgeItem],
+  items: [patientNameItem, patientIDItem, patientAgeItem, PatientSexItem],
 };
 
 // 右上角
@@ -228,19 +237,18 @@ function CustomizableViewportOverlay({
   // append functionality.  This code enables the historical usage, but
   // the recommended functionality is to append to the default values in
   // cornerstoneOverlay rather than defining individual items.
-  const topLeftCustomization = customizationService.getCustomization(
-    'cornerstoneOverlayTopLeft'
-  ) || cornerstoneOverlay?.topLeftItems;
-  const topRightCustomization = customizationService.getCustomization(
-    'cornerstoneOverlayTopRight'
-  ) || cornerstoneOverlay?.topRightItems;
-  const bottomLeftCustomization = customizationService.getCustomization(
-    'cornerstoneOverlayBottomLeft'
-  ) || cornerstoneOverlay?.bottomLeftItems;
-  const bottomRightCustomization = customizationService.getCustomization(
-    'cornerstoneOverlayBottomRight'
-  ) || cornerstoneOverlay?.bottomRightItems;
-
+  const topLeftCustomization =
+    customizationService.getCustomization('cornerstoneOverlayTopLeft') ||
+    cornerstoneOverlay?.topLeftItems;
+  const topRightCustomization =
+    customizationService.getCustomization('cornerstoneOverlayTopRight') ||
+    cornerstoneOverlay?.topRightItems;
+  const bottomLeftCustomization =
+    customizationService.getCustomization('cornerstoneOverlayBottomLeft') ||
+    cornerstoneOverlay?.bottomLeftItems;
+  const bottomRightCustomization =
+    customizationService.getCustomization('cornerstoneOverlayBottomRight') ||
+    cornerstoneOverlay?.bottomRightItems;
 
   const instanceNumber = useMemo(
     () =>
@@ -265,7 +273,6 @@ function CustomizableViewportOverlay({
       referenceInstance,
     };
   }, [viewportData, viewportId, instanceNumber, cornerstoneViewportService]);
-
 
   /**
    * Updating the VOI when the viewport changes its voi
@@ -467,7 +474,6 @@ function _getInstanceNumberFromStack(viewportData, imageIndex) {
   return parseInt(instanceNumber);
 }
 
-
 // Since volume viewports can be in any view direction, they can render
 // a reconstructed image which don't have imageIds; therefore, no instance and instanceNumber
 // Here we check if viewport is in the acquisition direction and if so, we get the instanceNumber
@@ -524,7 +530,7 @@ function OverlayItem(props) {
   }
   return (
     <div
-      className="flex flex-row overlay-item"
+      className="overlay-item flex flex-row"
       style={{ color, background }}
       title={title}
     >
@@ -545,7 +551,7 @@ function VOIOverlayItem({ voi, customization }: OverlayItemProps) {
 
   return (
     <div
-      className="flex flex-row overlay-item"
+      className="overlay-item flex flex-row"
       style={{ color: customization?.color }}
     >
       <span className="mr-1 shrink-0">W:</span>
@@ -562,7 +568,7 @@ function VOIOverlayItem({ voi, customization }: OverlayItemProps) {
 function ZoomOverlayItem({ scale, customization }: OverlayItemProps) {
   return (
     <div
-      className="flex flex-row overlay-item"
+      className="overlay-item flex flex-row"
       style={{ color: (customization && customization.color) || undefined }}
     >
       <span className="mr-1 shrink-0">Zoom:</span>
@@ -583,7 +589,7 @@ function InstanceNumberOverlayItem({
 
   return (
     <div
-      className="flex flex-row overlay-item"
+      className="overlay-item flex flex-row"
       style={{ color: (customization && customization.color) || undefined }}
     >
       <span className="mr-2 shrink-0">

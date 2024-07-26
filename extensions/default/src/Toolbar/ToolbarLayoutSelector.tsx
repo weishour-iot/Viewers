@@ -183,7 +183,7 @@ function LayoutSelector({
             ref={dropdownRef}
           >
             <div className="bg-secondary-dark flex flex-col gap-2.5 p-2">
-              <div className="text-aqua-pale text-xs">Common</div>
+              <div className="text-aqua-pale text-xs">常用</div>
 
               <div className="flex gap-4">
                 {commonPresets.map((preset, index) => (
@@ -199,7 +199,7 @@ function LayoutSelector({
 
               <div className="h-[2px] bg-black"></div>
 
-              <div className="text-aqua-pale text-xs">Advanced</div>
+              <div className="text-aqua-pale text-xs">高级</div>
 
               <div className="flex flex-col gap-2.5">
                 {advancedPresets.map((preset, index) => (
@@ -216,15 +216,15 @@ function LayoutSelector({
               </div>
             </div>
 
-            <div className="bg-primary-dark flex flex-col gap-2.5 border-l-2 border-solid border-black  p-2">
-              <div className="text-aqua-pale text-xs">Custom</div>
+            <div className="bg-primary-dark flex flex-col gap-2.5 border-l-2 border-solid border-black p-2">
+              <div className="text-aqua-pale text-xs">自定义</div>
               <DropdownContent
                 rows={rows}
                 columns={columns}
                 onSelection={onSelection}
               />
               <p className="text-aqua-pale text-xs leading-tight">
-                Hover to select <br></br>rows and columns <br></br> Click to apply
+                悬停选择行和列<br></br>单击应用
               </p>
             </div>
           </div>
