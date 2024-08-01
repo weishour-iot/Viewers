@@ -96,6 +96,14 @@ const moreTools = [
           evaluate: 'evaluate.cornerstoneTool.toggle',
         }),
         createButton({
+          id: 'ScaleOverlay',
+          icon: 'tool-calibration',
+          label: '比例尺',
+          tooltip: '切换比例尺',
+          commands: 'toggleEnabledDisabledToolbar',
+          evaluate: 'evaluate.cornerstoneTool.toggle',
+        }),
+        createButton({
           id: 'StackScroll',
           icon: 'tool-stack-scroll',
           label: 'Stack Scroll',

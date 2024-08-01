@@ -88,10 +88,10 @@ function initDefaultToolGroup(
       { toolName: toolNames.SplineROI },
       { toolName: toolNames.LivewireContour },
       { toolName: toolNames.WindowLevelRegion },
-      // {
-      //   toolName: toolNames.ScaleOverlay,
-      //   configuration: { scaleLocation: 'left' },
-      // },
+      {
+        toolName: toolNames.ScaleOverlay,
+        configuration: { scaleLocation: 'left' },
+      },
     ],
     enabled: [{ toolName: toolNames.ImageOverlayViewer }, { toolName: toolNames.ReferenceLines }],
     disabled: [

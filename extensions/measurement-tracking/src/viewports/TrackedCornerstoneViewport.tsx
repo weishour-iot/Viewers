@@ -108,7 +108,7 @@ function TrackedCornerstoneViewport(props: withAppTypes) {
 
     annotation.config.style.setViewportToolStyles(viewportId, {
       global: {
-        lineDash: '4,4',
+        lineDash: '',
       },
     });
 
@@ -230,7 +230,7 @@ function TrackedCornerstoneViewport(props: withAppTypes) {
 
   return (
     <>
-      <div className="relative flex flex-row w-full h-full overflow-hidden">
+      <div className="relative flex h-full w-full flex-row overflow-hidden">
         {getCornerstoneViewport()}
       </div>
     </>
@@ -324,11 +324,11 @@ function _getStatusComponent(isTracked, t) {
             <div className="flex pt-1">
               <Icon
                 name="info-link"
-                className="w-4 text-primary-main"
+                className="text-primary-main w-4"
               />
             </div>
-            <div className="flex ml-4">
-              <span className="text-base text-common-light">
+            <div className="ml-4 flex">
+              <span className="text-common-light text-base">
                 {isTracked ? (
                   <>{'列已被跟踪，可以在测量面板中查看'}</>
                 ) : (
