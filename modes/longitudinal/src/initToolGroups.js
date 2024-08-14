@@ -35,6 +35,7 @@ function initDefaultToolGroup(
       },
       {
         toolName: toolNames.Zoom,
+        configuration: { maxZoomScale: 14 },
         bindings: [{ mouseButton: Enums.MouseBindings.Secondary }],
       },
       { toolName: toolNames.StackScrollMouseWheel, bindings: [] },
@@ -85,7 +86,7 @@ function initDefaultToolGroup(
       },
       { toolName: toolNames.UltrasoundDirectional },
       { toolName: toolNames.PlanarFreehandROI },
-      { toolName: toolNames.SplineROI },
+      { toolName: toolNames.SplineROI, configuration: { preventHandleOutsideImage: true } },
       { toolName: toolNames.LivewireContour },
       { toolName: toolNames.WindowLevelRegion },
       {

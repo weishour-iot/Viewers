@@ -19,7 +19,7 @@ window.config = {
   },
   maxNumberOfWebWorkers: 3,
   showLoadingIndicator: true,
-  showWarningMessageForCrossOrigin: true,
+  showWarningMessageForCrossOrigin: false,
   showCPUFallbackMessage: true,
   strictZSpacingForVolumeViewport: true,
   // filterQueryParam: false,
