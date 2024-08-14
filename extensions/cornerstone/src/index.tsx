@@ -32,7 +32,6 @@ import { id } from './id';
 import { measurementMappingUtils } from './utils/measurementServiceMappings';
 import type { PublicViewportOptions } from './services/ViewportService/Viewport';
 import ImageOverlayViewerTool from './tools/ImageOverlayViewerTool';
-// import SplineROITool from './tools/SplineROITool';
 import { showLabelAnnotationPopup } from './utils/callInputDialog';
 import ViewportActionCornersService from './services/ViewportActionCornersService/ViewportActionCornersService';
 import { ViewportActionCornersProvider } from './contextProviders/ViewportActionCornersProvider';
@@ -231,7 +230,6 @@ export {
   findNearbyToolData,
   getEnabledElement,
   ImageOverlayViewerTool,
-  // SplineROITool,
   getSOPInstanceAttributes,
 };
 export default cornerstoneExtension;

@@ -417,6 +417,33 @@ const OHIFCornerstoneViewport = React.memo((props: withAppTypes) => {
     });
   }, [displaySets, viewportId, viewportActionCornersService, servicesManager, commandsManager]);
 
+  // 监听并修复cursor样式
+  useEffect(() => {
+    const viewportElement = elementRef.current;
+
+    if (viewportElement) {
+      const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+          if (mutation.attributeName === 'style') {
+            const cursorStyle = window.getComputedStyle(viewportElement).cursor;
+
+            if (cursorStyle === 'none') {
+              viewportElement.style.cursor = 'auto';
+            }
+          }
+        });
+      });
+
+      const config = { attributes: true, attributeFilter: ['style'] };
+      observer.observe(viewportElement, config);
+
+      // Cleanup: 在组件卸载时停止观察
+      return () => {
+        observer.disconnect();
+      };
+    }
+  }, []);
+
   const { ref: resizeRef } = useResizeDetector({
     onResize,
   });
