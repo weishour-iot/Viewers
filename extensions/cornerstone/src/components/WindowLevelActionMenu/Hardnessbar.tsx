@@ -4,7 +4,7 @@ import { StackViewport, VolumeViewport } from '@cornerstonejs/core';
 import { ColorbarProps } from '../../types/Colorbar';
 import { utilities } from '@cornerstonejs/core';
 
-export function setViewportColorbar(
+export function setViewportHardnessbar(
   viewportId,
   displaySets,
   commandsManager,
@@ -13,7 +13,6 @@ export function setViewportColorbar(
 ) {
   const { cornerstoneViewportService } = servicesManager.services;
   const viewport = cornerstoneViewportService.getCornerstoneViewport(viewportId);
-
   const viewportInfo = cornerstoneViewportService.getViewportInfo(viewportId);
   const backgroundColor = viewportInfo.getViewportOptions().background;
   const isLight = backgroundColor ? utilities.isEqual(backgroundColor, [1, 1, 1]) : false;
@@ -45,7 +44,7 @@ export function setViewportColorbar(
   }
 
   commandsManager.run({
-    commandName: 'toggleViewportColorbar',
+    commandName: 'toggleViewportHardnessbar',
     commandOptions: {
       viewportId,
       options: colorbarOptions,
@@ -55,14 +54,14 @@ export function setViewportColorbar(
   });
 }
 
-export function Colorbar({
+export function Hardnessbar({
   viewportId,
   displaySets,
   commandsManager,
   servicesManager,
   colorbarProperties,
 }: withAppTypes<ColorbarProps>): ReactElement {
-  const { colorbarService } = servicesManager.services;
+  const { hardnessbarService } = servicesManager.services;
   const {
     width: colorbarWidth,
     colorbarTickPosition,
@@ -70,28 +69,28 @@ export function Colorbar({
     colormaps,
     colorbarInitialColormap,
   } = colorbarProperties;
-  const [showColorbar, setShowColorbar] = useState(colorbarService.hasColorbar(viewportId));
+  const [showColorbar, setShowColorbar] = useState(hardnessbarService.hasColorbar(viewportId));
 
-  const onSetColorbar = useCallback(() => {
-    setViewportColorbar(viewportId, displaySets, commandsManager, servicesManager, {
+  const onSetHardnessbar = useCallback(() => {
+    setViewportHardnessbar(viewportId, displaySets, commandsManager, servicesManager, {
       viewportId,
       colormaps,
       ticks: {
-        position: 'right',
+        position: colorbarTickPosition,
       },
       width: colorbarWidth,
-      position: 'left',
-      activeColormapName: colorbarInitialColormap,
+      position: colorbarContainerPosition,
+      activeColormapName: 'ge',
     });
   }, [commandsManager]);
 
   useEffect(() => {
     const updateColorbarState = () => {
-      setShowColorbar(colorbarService.hasColorbar(viewportId));
+      setShowColorbar(hardnessbarService.hasColorbar(viewportId));
     };
 
-    const { unsubscribe } = colorbarService.subscribe(
-      colorbarService.EVENTS.STATE_CHANGED,
+    const { unsubscribe } = hardnessbarService.subscribe(
+      hardnessbarService.EVENTS.STATE_CHANGED,
       updateColorbarState
     );
 
@@ -105,10 +104,10 @@ export function Colorbar({
       <div className="all-in-one-menu-item flex w-full justify-center">
         <div className="mr-2 w-[28px]"></div>
         <SwitchButton
-          label="显示颜色栏"
+          label="显示硬度栏"
           checked={showColorbar}
           onChange={() => {
-            onSetColorbar();
+            onSetHardnessbar();
           }}
         />
       </div>

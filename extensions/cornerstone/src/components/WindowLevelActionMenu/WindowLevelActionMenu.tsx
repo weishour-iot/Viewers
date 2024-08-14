@@ -5,6 +5,7 @@ import { AllInOneMenu, useViewportGrid } from '@ohif/ui';
 import { Colormap } from './Colormap';
 import { Colorbar } from './Colorbar';
 import { setViewportColorbar } from './Colorbar';
+import { Hardnessbar, setViewportHardnessbar } from './Hardnessbar';
 import { WindowLevelPreset } from '../../types/WindowLevel';
 import { ColorbarProperties } from '../../types/Colorbar';
 import { VolumeRenderingQualityRange } from '../../types/ViewportPresets';
@@ -47,7 +48,8 @@ export function WindowLevelActionMenu({
     colorbarTickPosition,
     width: colorbarWidth,
   } = colorbarProperties;
-  const { colorbarService, cornerstoneViewportService } = servicesManager.services;
+  const { colorbarService, hardnessbarService, cornerstoneViewportService } =
+    servicesManager.services;
   const viewportInfo = cornerstoneViewportService.getViewportInfo(viewportId);
   const viewport = cornerstoneViewportService.getCornerstoneViewport(viewportId);
   const backgroundColor = viewportInfo.getViewportOptions().background;
@@ -63,16 +65,29 @@ export function WindowLevelActionMenu({
   const [vpHeight, setVpHeight] = useState(element?.clientHeight);
   const [menuKey, setMenuKey] = useState(0);
   const [is3DVolume, setIs3DVolume] = useState(false);
+  const [isQme, setIsQme] = useState(false);
 
   const onSetColorbar = useCallback(() => {
     setViewportColorbar(viewportId, displaySets, commandsManager, servicesManager, {
+      colormaps,
+      ticks: {
+        position: 'right',
+      },
+      width: colorbarWidth,
+      position: 'left',
+      activeColormapName: colorbarInitialColormap,
+    });
+  }, [commandsManager]);
+
+  const onSetHardnessbar = useCallback(() => {
+    setViewportHardnessbar(viewportId, displaySets, commandsManager, servicesManager, {
       colormaps,
       ticks: {
         position: colorbarTickPosition,
       },
       width: colorbarWidth,
       position: colorbarContainerPosition,
-      activeColormapName: colorbarInitialColormap,
+      activeColormapName: 'ge',
     });
   }, [commandsManager]);
 
@@ -84,13 +99,24 @@ export function WindowLevelActionMenu({
   }, [element, vpHeight]);
 
   useEffect(() => {
-    if (!colorbarService.hasColorbar(viewportId)) {
-      return;
+    const isqme = displaySets.length > 0 && displaySets[0].SeriesDescription.search('QME') !== -1;
+    if (isqme) {
+      if (!hardnessbarService.hasColorbar(viewportId)) {
+        window.setTimeout(() => {
+          colorbarService.removeColorbar(viewportId);
+          hardnessbarService.removeColorbar(viewportId);
+          onSetHardnessbar();
+        }, 0);
+      }
+    } else {
+      if (!colorbarService.hasColorbar(viewportId)) {
+        window.setTimeout(() => {
+          hardnessbarService.removeColorbar(viewportId);
+          colorbarService.removeColorbar(viewportId);
+          onSetColorbar();
+        }, 0);
+      }
     }
-    window.setTimeout(() => {
-      colorbarService.removeColorbar(viewportId);
-      onSetColorbar();
-    }, 0);
   }, [viewportId, displaySets, viewport]);
 
   useEffect(() => {
@@ -101,6 +127,7 @@ export function WindowLevelActionMenu({
     } else {
       setIs3DVolume(false);
     }
+    setIsQme(displaySets.length > 0 && displaySets[0].SeriesDescription.search('QME') !== -1);
   }, [
     displaySets,
     viewportId,
@@ -130,10 +157,20 @@ export function WindowLevelActionMenu({
       menuKey={menuKey}
     >
       <AllInOneMenu.ItemPanel>
-        {!is3DVolume && (
+        {isQme && (
+          <Hardnessbar
+            viewportId={viewportId}
+            displaySets={displaySets.filter(ds => ds.Modalit === 'OCT')}
+            commandsManager={commandsManager}
+            servicesManager={servicesManager}
+            colorbarProperties={colorbarProperties}
+          />
+        )}
+
+        {!isQme && (
           <Colorbar
             viewportId={viewportId}
-            displaySets={displaySets.filter(ds => !nonImageModalities.includes(ds.Modality))}
+            displaySets={displaySets.filter(ds => ds.Modalit === 'OCT')}
             commandsManager={commandsManager}
             servicesManager={servicesManager}
             colorbarProperties={colorbarProperties}

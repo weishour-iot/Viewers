@@ -6,6 +6,7 @@ import CornerstoneCacheService from '../services/CornerstoneCacheService';
 import CornerstoneViewportService from '../services/ViewportService/CornerstoneViewportService';
 import ViewportActionCornersService from '../services/ViewportActionCornersService/ViewportActionCornersService';
 import ColorbarService from '../services/ColorbarService';
+import HardnessbarService from '../services/ColorbarService/HardnessbarService';
 
 interface CornerstoneServices extends Types.Services {
   cornerstoneViewportService: CornerstoneViewportService;
@@ -15,6 +16,7 @@ interface CornerstoneServices extends Types.Services {
   cornerstoneCacheService: CornerstoneCacheService;
   viewportActionCornersService: ViewportActionCornersService;
   colorbarService: ColorbarService;
+  hardnessbarService: HardnessbarService;
 }
 
 export default CornerstoneServices;

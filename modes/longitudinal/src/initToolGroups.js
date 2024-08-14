@@ -91,7 +91,7 @@ function initDefaultToolGroup(
       { toolName: toolNames.WindowLevelRegion },
       {
         toolName: toolNames.ScaleOverlay,
-        configuration: { scaleLocation: 'left' },
+        configuration: { scaleLocation: 'bottom' },
       },
     ],
     enabled: [{ toolName: toolNames.ImageOverlayViewer }, { toolName: toolNames.ReferenceLines }],

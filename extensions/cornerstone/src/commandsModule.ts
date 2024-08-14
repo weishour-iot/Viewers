@@ -41,6 +41,7 @@ function commandsModule({
     measurementService,
     customizationService,
     colorbarService,
+    hardnessbarService,
     hangingProtocolService,
     syncGroupService,
   } = servicesManager.services;
@@ -267,6 +268,15 @@ function commandsModule({
         return;
       }
       colorbarService.addColorbar(viewportId, displaySetInstanceUIDs, options);
+    },
+
+    toggleViewportHardnessbar: ({ viewportId, displaySetInstanceUIDs, options = {} }) => {
+      const hasColorbar = hardnessbarService.hasColorbar(viewportId);
+      if (hasColorbar) {
+        hardnessbarService.removeColorbar(viewportId);
+        return;
+      }
+      hardnessbarService.addColorbar(viewportId, displaySetInstanceUIDs, options);
     },
 
     setWindowLevel(props) {
@@ -854,6 +864,9 @@ function commandsModule({
     },
     toggleViewportColorbar: {
       commandFn: actions.toggleViewportColorbar,
+    },
+    toggleViewportHardnessbar: {
+      commandFn: actions.toggleViewportHardnessbar,
     },
     deleteMeasurement: {
       commandFn: actions.deleteMeasurement,
