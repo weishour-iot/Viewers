@@ -13,7 +13,7 @@ import { WindowLevel } from './WindowLevel';
 import { VolumeRenderingPresets } from './VolumeRenderingPresets';
 import { VolumeRenderingOptions } from './VolumeRenderingOptions';
 import { ViewportPreset } from '../../types/ViewportPresets';
-import { VolumeViewport3D } from '@cornerstonejs/core';
+import { getEnabledElement, metaData, Types, VolumeViewport3D } from '@cornerstonejs/core';
 import { utilities } from '@cornerstonejs/core';
 
 export type WindowLevelActionMenuProps = {
@@ -71,10 +71,10 @@ export function WindowLevelActionMenu({
     setViewportColorbar(viewportId, displaySets, commandsManager, servicesManager, {
       colormaps,
       ticks: {
-        position: 'right',
+        position: colorbarTickPosition,
       },
       width: colorbarWidth,
-      position: 'left',
+      position: colorbarContainerPosition,
       activeColormapName: colorbarInitialColormap,
     });
   }, [commandsManager]);
@@ -118,6 +118,30 @@ export function WindowLevelActionMenu({
       }
     }
   }, [viewportId, displaySets, viewport]);
+
+  useEffect(() => {
+    window.setTimeout(async () => {
+      console.log('------------------------------------------------');
+      const csImage = viewport['csImage'] as Types.IImage;
+      csImage['currentImageIdIndex'] = viewport.getCurrentImageIdIndex();
+      // 获取QME图像灰度值
+      const FloatPixelData = metaData.get('FloatPixelData', csImage.imageId);
+      if (FloatPixelData) {
+        const retrieveBulkData = FloatPixelData.retrieveBulkData;
+
+        if (retrieveBulkData) {
+          const arrayBuffer = await retrieveBulkData({
+            BulkDataURI: FloatPixelData.BulkDataURI,
+            multipart: false,
+            mediaTypes: [{ mediaType: 'application/*' }],
+          });
+          csImage['grayPixelData'] = new Uint8Array(arrayBuffer);
+        }
+      }
+      console.log(csImage);
+      console.log('------------------------------------------------');
+    }, 100);
+  }, [viewport]);
 
   useEffect(() => {
     setMenuKey(menuKey + 1);

@@ -77,10 +77,10 @@ export function Colorbar({
       viewportId,
       colormaps,
       ticks: {
-        position: 'right',
+        position: colorbarTickPosition,
       },
       width: colorbarWidth,
-      position: 'left',
+      position: colorbarContainerPosition,
       activeColormapName: colorbarInitialColormap,
     });
   }, [commandsManager]);
@@ -101,8 +101,8 @@ export function Colorbar({
   }, [viewportId]);
 
   return (
-    <div className="flex w-full flex-col">
-      <div className="all-in-one-menu-item flex w-full justify-center">
+    <div className="flex flex-col w-full">
+      <div className="flex justify-center w-full all-in-one-menu-item">
         <div className="mr-2 w-[28px]"></div>
         <SwitchButton
           label="显示颜色栏"

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Enums, Types, utilities } from '@cornerstonejs/core';
+import { getEnabledElement, metaData, Enums, Types, utilities } from '@cornerstonejs/core';
 import { utilities as csToolsUtils } from '@cornerstonejs/tools';
 import { ImageScrollbar } from '@ohif/ui';
 
@@ -73,9 +73,29 @@ function CornerstoneImageScrollbar({
       return;
     }
 
-    const updateStackIndex = event => {
+    const updateStackIndex = async event => {
       const { newImageIdIndex } = event.detail;
       // find the index of imageId in the imageIds
+      console.log('------------------------------------------------');
+      const enabledElement = getEnabledElement(element);
+      const csImage = enabledElement.viewport['csImage'] as Types.IImage;
+      csImage['currentImageIdIndex'] = enabledElement.viewport.getCurrentImageIdIndex();
+      // 获取QME图像灰度值
+      const FloatPixelData = metaData.get('FloatPixelData', csImage.imageId);
+      if (FloatPixelData) {
+        const retrieveBulkData = FloatPixelData.retrieveBulkData;
+
+        if (retrieveBulkData) {
+          const arrayBuffer = await retrieveBulkData({
+            BulkDataURI: FloatPixelData.BulkDataURI,
+            multipart: false,
+            mediaTypes: [{ mediaType: 'application/*' }],
+          });
+          csImage['grayPixelData'] = new Uint8Array(arrayBuffer);
+        }
+      }
+      console.log(csImage);
+      console.log('------------------------------------------------');
       setImageSliceData({
         imageIndex: newImageIdIndex,
         numberOfSlices: viewportData.data[0].imageIds.length,
