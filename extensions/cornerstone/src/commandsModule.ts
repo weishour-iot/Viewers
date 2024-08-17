@@ -550,7 +550,8 @@ function commandsModule({
       const csImage = viewport['csImage'] as CoreTypes.IImage;
       csImage['currentImageIdIndex'] = viewport.getCurrentImageIdIndex();
       // 获取QME图像灰度值
-      const FloatPixelData = metaData.get('FloatPixelData', csImage.imageId);
+      const instance = metaData.get('instance', csImage.imageId);
+      const { FloatPixelData, SmallestImagePixelValue, LargestImagePixelValue } = instance;
       if (FloatPixelData) {
         const retrieveBulkData = FloatPixelData.retrieveBulkData;
 
@@ -567,19 +568,22 @@ function commandsModule({
       const minValue = 1;
       const maxValue = 1000;
       // 获取QME图像最小最大弹力log10的值
-      const { minPixelValue, maxPixelValue } = csImage;
+      csImage['minPixelGrayValue'] = SmallestImagePixelValue;
+      csImage['maxPixelGrayValue'] = LargestImagePixelValue;
+      const minPixelGrayValue = csImage['minPixelGrayValue'];
+      const maxPixelGrayValue = csImage['maxPixelGrayValue'];
       const minPixelElasticityValue =
-        (minPixelValue / 255) * (Math.log10(maxValue) - Math.log10(minValue)) +
+        (minPixelGrayValue / 255) * (Math.log10(maxValue) - Math.log10(minValue)) +
         Math.log10(minValue);
       const maxPixelElasticityValue =
-        (maxPixelValue / 255) * (Math.log10(maxValue) - Math.log10(minValue)) +
+        (maxPixelGrayValue / 255) * (Math.log10(maxValue) - Math.log10(minValue)) +
         Math.log10(minValue);
       csImage['minPixelElasticityValue'] = parseFloat(minPixelElasticityValue.toFixed(6));
       csImage['maxPixelElasticityValue'] = parseFloat(maxPixelElasticityValue.toFixed(6));
 
       // 柱状图灰度值
       const grayColorMap = [];
-      for (let i = minPixelValue; i <= maxPixelValue; ++i) {
+      for (let i = minPixelGrayValue; i <= maxPixelGrayValue; ++i) {
         const pixelElasticityValue =
           (i / 255) * (Math.log10(maxValue) - Math.log10(minValue)) + Math.log10(minValue);
         const grayColorMapValue =
