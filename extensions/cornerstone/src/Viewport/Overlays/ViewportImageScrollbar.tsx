@@ -139,11 +139,13 @@ function CornerstoneImageScrollbar({
       });
 
       const enabledElement = getEnabledElement(element);
-      const csImage = enabledElement.viewport['csImage'] as Types.IImage;
+      const { viewport } = enabledElement;
+      const csImage = viewport['csImage'] as Types.IImage;
       // QME处理 ------------------------------------------------------
-      csImage['currentImageIdIndex'] = enabledElement.viewport.getCurrentImageIdIndex();
+      csImage['currentImageIdIndex'] = viewport.getCurrentImageIdIndex();
       // 获取QME图像灰度值
-      const instance = metaData.get('instance', csImage.imageId);
+      const ImageIds = viewport.getImageIds();
+      const instance = metaData.get('instance', ImageIds[csImage['currentImageIdIndex']]);
       const { FloatPixelData, SmallestImagePixelValue, LargestImagePixelValue } = instance;
       if (FloatPixelData) {
         const retrieveBulkData = FloatPixelData.retrieveBulkData;

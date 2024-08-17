@@ -12,7 +12,7 @@ import { WindowLevel } from './WindowLevel';
 import { VolumeRenderingPresets } from './VolumeRenderingPresets';
 import { VolumeRenderingOptions } from './VolumeRenderingOptions';
 import { ViewportPreset } from '../../types/ViewportPresets';
-import { metaData, Types, VolumeViewport3D } from '@cornerstonejs/core';
+import { metaData, Enums, Types, VolumeViewport3D } from '@cornerstonejs/core';
 import { utilities } from '@cornerstonejs/core';
 import { cloneDeep } from 'lodash';
 
@@ -144,12 +144,17 @@ export function WindowLevelActionMenu({
   }, [element, vpHeight]);
 
   useEffect(() => {
+    if (viewport?.type !== Enums.ViewportType.STACK) {
+      return;
+    }
+
     window.setTimeout(async () => {
       const csImage = viewport['csImage'] as Types.IImage;
       // QME处理 ------------------------------------------------------
       csImage['currentImageIdIndex'] = viewport.getCurrentImageIdIndex();
       // 获取QME图像灰度值
-      const instance = metaData.get('instance', csImage.imageId);
+      const ImageIds = viewport.getImageIds();
+      const instance = metaData.get('instance', ImageIds[csImage['currentImageIdIndex']]);
       const { FloatPixelData, SmallestImagePixelValue, LargestImagePixelValue } = instance;
       if (FloatPixelData) {
         const retrieveBulkData = FloatPixelData.retrieveBulkData;

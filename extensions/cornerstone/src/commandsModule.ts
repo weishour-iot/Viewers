@@ -550,7 +550,8 @@ function commandsModule({
       const csImage = viewport['csImage'] as CoreTypes.IImage;
       csImage['currentImageIdIndex'] = viewport.getCurrentImageIdIndex();
       // 获取QME图像灰度值
-      const instance = metaData.get('instance', csImage.imageId);
+      const ImageIds = viewport.getImageIds();
+      const instance = metaData.get('instance', ImageIds[csImage['currentImageIdIndex']]);
       const { FloatPixelData, SmallestImagePixelValue, LargestImagePixelValue } = instance;
       if (FloatPixelData) {
         const retrieveBulkData = FloatPixelData.retrieveBulkData;
