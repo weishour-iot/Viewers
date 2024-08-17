@@ -2,7 +2,8 @@ import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { SwitchButton } from '@ohif/ui';
 import { StackViewport, VolumeViewport } from '@cornerstonejs/core';
 import { ColorbarProps } from '../../types/Colorbar';
-import { utilities } from '@cornerstonejs/core';
+import { Types, utilities } from '@cornerstonejs/core';
+import { cloneDeep, findIndex } from 'lodash';
 
 export function setViewportHardnessbar(
   viewportId,
@@ -61,7 +62,7 @@ export function Hardnessbar({
   servicesManager,
   colorbarProperties,
 }: withAppTypes<ColorbarProps>): ReactElement {
-  const { hardnessbarService } = servicesManager.services;
+  const { hardnessbarService, cornerstoneViewportService } = servicesManager.services;
   const {
     width: colorbarWidth,
     colorbarTickPosition,
@@ -70,17 +71,24 @@ export function Hardnessbar({
     colorbarInitialColormap,
   } = colorbarProperties;
   const [showColorbar, setShowColorbar] = useState(hardnessbarService.hasColorbar(viewportId));
+  const viewport = cornerstoneViewportService.getCornerstoneViewport(viewportId);
+  const csImage = viewport['csImage'] as Types.IImage;
+  const hcolormaps = cloneDeep(colormaps);
 
   const onSetHardnessbar = useCallback(() => {
+    if (findIndex(hcolormaps, ['name', 'qme']) === -1) {
+      hcolormaps.push(csImage['colorMap']);
+    }
+
     setViewportHardnessbar(viewportId, displaySets, commandsManager, servicesManager, {
       viewportId,
-      colormaps,
+      colormaps: hcolormaps,
       ticks: {
         position: colorbarTickPosition,
       },
       width: colorbarWidth,
       position: colorbarContainerPosition,
-      activeColormapName: 'ge',
+      activeColormapName: 'qme',
     });
   }, [commandsManager]);
 

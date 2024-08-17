@@ -77,15 +77,15 @@ export default class HardnessbarService extends PubSubService {
       const actorEntry = actorEntries.find(entry => entry.uid.includes(displaySetInstanceUID));
       const volumeId = actorEntry?.uid;
       const properties = viewport?.getProperties(volumeId);
-      const colormap = properties?.colormap;
+      const colormap = undefined;
       // if there's an initial colormap set, and no colormap on the viewport, set it
       if (activeColormapName && !colormap) {
-        this.setViewportColormap(
-          viewportId,
-          displaySetInstanceUID,
-          colormaps[activeColormapName],
-          true
-        );
+        // this.setViewportColormap(
+        //   viewportId,
+        //   displaySetInstanceUID,
+        //   colormaps[activeColormapName],
+        //   true
+        // );
       }
 
       const colorbarContainer = containers[index];
@@ -94,7 +94,7 @@ export default class HardnessbarService extends PubSubService {
         element,
         colormaps: options.colormaps || {},
         // if there's an existing colormap set, we use it, otherwise we use the activeColormapName, otherwise, grayscale
-        activeColormapName: colormap?.name || options?.activeColormapName || 'Grayscale',
+        activeColormapName: options?.activeColormapName || 'qme',
         container: colorbarContainer,
         ticks: {
           ...HardnessbarService.defaultTickStyles,

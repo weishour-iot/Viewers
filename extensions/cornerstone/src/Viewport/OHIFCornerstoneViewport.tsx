@@ -106,6 +106,7 @@ const OHIFCornerstoneViewport = React.memo((props: withAppTypes) => {
     viewportOptions,
     displaySetOptions,
     servicesManager,
+    commandsManager,
     onElementEnabled,
     // eslint-disable-next-line react/prop-types
     onElementDisabled,
@@ -466,6 +467,7 @@ const OHIFCornerstoneViewport = React.memo((props: withAppTypes) => {
           element={elementRef.current}
           scrollbarHeight={scrollbarHeight}
           servicesManager={servicesManager}
+          commandsManager={commandsManager}
         />
         <CinePlayer
           enabledVPElement={enabledVPElement}
@@ -718,6 +720,7 @@ OHIFCornerstoneViewport.propTypes = {
   viewportOptions: PropTypes.object,
   displaySetOptions: PropTypes.arrayOf(PropTypes.any),
   servicesManager: PropTypes.object.isRequired,
+  commandsManager: PropTypes.object.isRequired,
   onElementEnabled: PropTypes.func,
   isJumpToMeasurementDisabled: PropTypes.bool,
   // Note: you SHOULD NOT use the initialImageIdOrIndex for manipulation
