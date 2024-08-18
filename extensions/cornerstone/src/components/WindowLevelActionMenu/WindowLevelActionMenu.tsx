@@ -82,16 +82,23 @@ export function WindowLevelActionMenu({
   }, [commandsManager]);
 
   const onSetHardnessbar = useCallback(
-    colormaps => {
-      setViewportHardnessbar(viewportId, displaySets, commandsManager, servicesManager, {
-        colormaps,
-        ticks: {
-          position: colorbarTickPosition,
+    (colormaps, csImage) => {
+      setViewportHardnessbar(
+        viewportId,
+        displaySets,
+        commandsManager,
+        servicesManager,
+        {
+          colormaps,
+          ticks: {
+            position: colorbarTickPosition,
+          },
+          width: colorbarWidth,
+          position: colorbarContainerPosition,
+          activeColormapName: 'qme',
         },
-        width: colorbarWidth,
-        position: colorbarContainerPosition,
-        activeColormapName: 'qme',
-      });
+        csImage
+      );
     },
     [commandsManager]
   );
@@ -184,6 +191,8 @@ export function WindowLevelActionMenu({
         Math.log10(minValue);
       csImage['minPixelElasticityValue'] = parseFloat(minPixelElasticityValue.toFixed(6));
       csImage['maxPixelElasticityValue'] = parseFloat(maxPixelElasticityValue.toFixed(6));
+      csImage['minElasticityKpa'] = parseFloat((10 ** minPixelElasticityValue).toFixed(2));
+      csImage['maxElasticityKpa'] = parseFloat((10 ** maxPixelElasticityValue).toFixed(2));
 
       // 柱状图灰度值
       const grayColorMap = [];
@@ -231,7 +240,7 @@ export function WindowLevelActionMenu({
             registerColormap(csImage['colorMap']);
           }
 
-          onSetHardnessbar(hcolormaps);
+          onSetHardnessbar(hcolormaps, csImage);
         }, 200);
       }
     } else {

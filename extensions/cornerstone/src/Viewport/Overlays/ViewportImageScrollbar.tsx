@@ -37,14 +37,21 @@ function CornerstoneImageScrollbar({
   };
 
   const onSetHardnessbar = useCallback(
-    colormaps => {
-      setViewportHardnessbar(viewportId, {}, commandsManager, servicesManager, {
-        colormaps,
-        ticks: { position: 'left' },
-        width: '16px',
-        position: 'right',
-        activeColormapName: 'qme',
-      });
+    (colormaps, csImage) => {
+      setViewportHardnessbar(
+        viewportId,
+        {},
+        commandsManager,
+        servicesManager,
+        {
+          colormaps,
+          ticks: { position: 'left' },
+          width: '16px',
+          position: 'right',
+          activeColormapName: 'qme',
+        },
+        csImage
+      );
     },
     [commandsManager]
   );
@@ -157,14 +164,6 @@ function CornerstoneImageScrollbar({
             mediaTypes: [{ mediaType: 'application/*' }],
           });
           csImage['grayPixelData'] = new Uint8Array(arrayBuffer);
-
-          // retrieveBulkData({
-          //   BulkDataURI: FloatPixelData.BulkDataURI,
-          //   multipart: false,
-          //   mediaTypes: [{ mediaType: 'application/*' }],
-          // }).then(arrayBuffer => {
-          //   csImage['grayPixelData'] = new Uint8Array(arrayBuffer);
-          // });
         }
 
         const minValue = 1;
@@ -182,6 +181,8 @@ function CornerstoneImageScrollbar({
           Math.log10(minValue);
         csImage['minPixelElasticityValue'] = parseFloat(minPixelElasticityValue.toFixed(6));
         csImage['maxPixelElasticityValue'] = parseFloat(maxPixelElasticityValue.toFixed(6));
+        csImage['minElasticityKpa'] = parseFloat((10 ** minPixelElasticityValue).toFixed(2));
+        csImage['maxElasticityKpa'] = parseFloat((10 ** maxPixelElasticityValue).toFixed(2));
 
         // 柱状图灰度值
         const grayColorMap = [];
@@ -224,7 +225,7 @@ function CornerstoneImageScrollbar({
         const hcolormaps = cloneDeep(colormaps);
         hcolormaps.push(csImage['colorMap']);
 
-        onSetHardnessbar(hcolormaps);
+        onSetHardnessbar(hcolormaps, csImage);
       },
       1100,
       { maxWait: 1100, leading: true, trailing: true }

@@ -25,10 +25,10 @@ function initDefaultToolGroup(
 
   const tools = {
     active: [
-      {
-        toolName: toolNames.WindowLevel,
-        bindings: [{ mouseButton: Enums.MouseBindings.Primary }],
-      },
+      // {
+      //   toolName: toolNames.WindowLevel,
+      //   bindings: [{ mouseButton: Enums.MouseBindings.Primary }],
+      // },
       {
         toolName: toolNames.Pan,
         bindings: [{ mouseButton: Enums.MouseBindings.Auxiliary }],
@@ -36,7 +36,7 @@ function initDefaultToolGroup(
       {
         toolName: toolNames.Zoom,
         configuration: { maxZoomScale: 14 },
-        bindings: [{ mouseButton: Enums.MouseBindings.Secondary }],
+        bindings: [{ mouseButton: Enums.MouseBindings.Primary }],
       },
       { toolName: toolNames.StackScrollMouseWheel, bindings: [] },
     ],
@@ -68,7 +68,20 @@ function initDefaultToolGroup(
       },
       { toolName: toolNames.Bidirectional },
       { toolName: toolNames.DragProbe },
-      { toolName: toolNames.Probe },
+      {
+        toolName: toolNames.Probe,
+        configuration: {
+          getTextLines: (data, targetId) => {
+            // const cachedVolumeStats = data.cachedStats[targetId];
+            // const { index, value, modalityUnit } = cachedVolumeStats;
+            // console.log(cachedVolumeStats);
+            // console.log(targetId);
+            const result = commandsManager.run('ProbeGetTextLines', { data, targetId });
+            console.log(result);
+            return ['自定义标注'];
+          },
+        },
+      },
       { toolName: toolNames.EllipticalROI },
       { toolName: toolNames.CircleROI },
       { toolName: toolNames.RectangleROI },

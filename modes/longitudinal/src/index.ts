@@ -100,7 +100,7 @@ function modeFactory({ modeConfiguration }) {
         'Zoom',
         'Pan',
         // 'TrackballRotate',
-        'WindowLevel',
+        // 'WindowLevel',
         'Capture',
         'Layout',
         // 'Crosshairs',

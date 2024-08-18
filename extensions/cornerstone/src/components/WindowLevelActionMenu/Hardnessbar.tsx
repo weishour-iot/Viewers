@@ -10,7 +10,8 @@ export function setViewportHardnessbar(
   displaySets,
   commandsManager,
   servicesManager: AppTypes.ServicesManager,
-  colorbarOptions
+  colorbarOptions,
+  csImage: Types.IImage
 ) {
   const { cornerstoneViewportService } = servicesManager.services;
   const viewport = cornerstoneViewportService.getCornerstoneViewport(viewportId);
@@ -50,6 +51,7 @@ export function setViewportHardnessbar(
       viewportId,
       options: colorbarOptions,
       displaySetInstanceUIDs,
+      csImage,
     },
     context: 'CORNERSTONE',
   });
@@ -76,20 +78,27 @@ export function Hardnessbar({
   const hcolormaps = cloneDeep(colormaps);
 
   const onSetHardnessbar = useCallback(() => {
-    if (findIndex(hcolormaps, ['name', 'qme']) === -1) {
+    if (findIndex(hcolormaps, ['name', 'qme']) === -1 && csImage['colorMap']) {
       hcolormaps.push(csImage['colorMap']);
     }
 
-    setViewportHardnessbar(viewportId, displaySets, commandsManager, servicesManager, {
+    setViewportHardnessbar(
       viewportId,
-      colormaps: hcolormaps,
-      ticks: {
-        position: colorbarTickPosition,
+      displaySets,
+      commandsManager,
+      servicesManager,
+      {
+        viewportId,
+        colormaps: hcolormaps,
+        ticks: {
+          position: colorbarTickPosition,
+        },
+        width: colorbarWidth,
+        position: colorbarContainerPosition,
+        activeColormapName: 'qme',
       },
-      width: colorbarWidth,
-      position: colorbarContainerPosition,
-      activeColormapName: 'qme',
-    });
+      csImage
+    );
   }, [commandsManager]);
 
   useEffect(() => {
