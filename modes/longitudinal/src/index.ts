@@ -105,6 +105,7 @@ function modeFactory({ modeConfiguration }) {
         'Layout',
         // 'Crosshairs',
         'TagBrowser',
+        'Probe',
         'MoreTools',
       ]);
 

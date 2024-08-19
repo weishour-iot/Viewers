@@ -119,16 +119,16 @@ const toolbarButtons: Button[] = [
     },
   },
   // Window Level
-  {
-    id: 'WindowLevel',
-    uiType: 'ohif.radioGroup',
-    props: {
-      icon: 'tool-window-level',
-      label: 'Window Level',
-      commands: setToolActiveToolbar,
-      evaluate: 'evaluate.cornerstoneTool',
-    },
-  },
+  // {
+  //   id: 'WindowLevel',
+  //   uiType: 'ohif.radioGroup',
+  //   props: {
+  //     icon: 'tool-window-level',
+  //     label: 'Window Level',
+  //     commands: setToolActiveToolbar,
+  //     evaluate: 'evaluate.cornerstoneTool',
+  //   },
+  // },
   // Pan...
   {
     id: 'Pan',
@@ -201,6 +201,16 @@ const toolbarButtons: Button[] = [
       label: 'Dicom Tag Browser',
       commands: 'openDICOMTagViewer',
       evaluate: 'evaluate.action',
+    },
+  },
+  {
+    id: 'Probe',
+    uiType: 'ohif.radioGroup',
+    props: {
+      icon: 'tool-probe',
+      label: 'Probe',
+      commands: 'setToolActiveToolbar',
+      evaluate: 'evaluate.cornerstoneTool',
     },
   },
 ];
