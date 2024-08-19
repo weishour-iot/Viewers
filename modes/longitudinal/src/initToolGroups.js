@@ -71,15 +71,8 @@ function initDefaultToolGroup(
       {
         toolName: toolNames.Probe,
         configuration: {
-          getTextLines: (data, targetId) => {
-            // const cachedVolumeStats = data.cachedStats[targetId];
-            // const { index, value, modalityUnit } = cachedVolumeStats;
-            // console.log(cachedVolumeStats);
-            // console.log(targetId);
-            const result = commandsManager.run('ProbeGetTextLines', { data, targetId });
-            console.log(result);
-            return ['自定义标注'];
-          },
+          getTextLines: (data, targetId) =>
+            commandsManager.run('ProbeGetTextLines', { data, targetId }),
         },
       },
       { toolName: toolNames.EllipticalROI },

@@ -22,6 +22,7 @@ import toggleImageSliceSync from './utils/imageSliceSync/toggleImageSliceSync';
 import { getFirstAnnotationSelected } from './utils/measurementServiceMappings/utils/selection';
 import getActiveViewportEnabledElement from './utils/getActiveViewportEnabledElement';
 import toggleVOISliceSync from './utils/toggleVOISliceSync';
+import { isUndefined } from 'lodash';
 
 const toggleSyncFunctions = {
   imageSlice: toggleImageSliceSync,
@@ -276,12 +277,52 @@ function commandsModule({
       callLabelAutocompleteDialog(uiDialogService, callback, {}, labelConfig);
     },
     ProbeGetTextLines: ({ data, targetId }) => {
+      const cachedVolumeStats = data.cachedStats[targetId];
+      const { index, value, modalityUnit } = cachedVolumeStats;
+
+      if (value === undefined) {
+        return;
+      }
+
+      let textLines = [];
       const { viewport } = _getActiveViewportEnabledElement();
       const csImage = viewport['csImage'] as CoreTypes.IImage;
+      const targetArray = targetId.split('imageId:');
 
-      console.log(viewport.getCurrentImageIdIndex());
-      console.log(csImage);
-      return targetId;
+      // 获取QME图像灰度值
+      csImage['currentImageIdIndex'] = viewport.getCurrentImageIdIndex();
+      const FloatPixelData = metaData.get('FloatPixelData', targetArray[1]);
+      if (isUndefined(FloatPixelData)) {
+        textLines.push(`(${index[0]}, ${index[1]}, ${index[2]})`);
+
+        if (value instanceof Array && modalityUnit instanceof Array) {
+          for (let i = 0; i < value.length; i++) {
+            textLines.push(`${cstUtils.roundNumber(value[i])} ${modalityUnit[i]}`);
+          }
+        } else {
+          textLines.push(`${cstUtils.roundNumber(value)} ${modalityUnit}`);
+        }
+      } else {
+        if (!isUndefined(FloatPixelData.Value)) {
+          const grayPixelData = new Uint8Array(FloatPixelData.Value);
+          const x = index[0];
+          const y = index[1];
+          if (x >= 0 && x <= 403 && y >= 0 && y <= 403) {
+            const grayPixelIndex = y * 404 + x;
+            const grayPixelValue = grayPixelData[grayPixelIndex];
+            const minValue = 1;
+            const maxValue = 1000;
+            const grayPixelEValue =
+              (grayPixelValue / 255) * (Math.log10(maxValue) - Math.log10(minValue)) +
+              Math.log10(minValue);
+            const grayPixelKpa = parseFloat((10 ** grayPixelEValue).toFixed(1));
+            textLines = [`${grayPixelKpa} kPa`];
+          } else {
+            textLines = [];
+          }
+        }
+      }
+      return textLines;
     },
     toggleCine: () => {
       const { viewports } = viewportGridService.getState();

@@ -14,7 +14,7 @@ import { VolumeRenderingOptions } from './VolumeRenderingOptions';
 import { ViewportPreset } from '../../types/ViewportPresets';
 import { metaData, Enums, Types, VolumeViewport3D } from '@cornerstonejs/core';
 import { utilities } from '@cornerstonejs/core';
-import { cloneDeep } from 'lodash';
+import { isUndefined, cloneDeep } from 'lodash';
 
 export type WindowLevelActionMenuProps = {
   viewportId: string;
@@ -176,6 +176,10 @@ export function WindowLevelActionMenu({
         }
       }
 
+      if (isUndefined(SmallestImagePixelValue) || isUndefined(LargestImagePixelValue)) {
+        return;
+      }
+
       const minValue = 1;
       const maxValue = 1000;
       // 获取QME图像最小最大弹力log10的值
@@ -236,11 +240,13 @@ export function WindowLevelActionMenu({
           const csImage = viewport['csImage'] as Types.IImage;
           hcolormaps.push(csImage['colorMap']);
 
-          if (!getColormap('qme')) {
+          if (!getColormap('qme') && csImage['colorMap']) {
             registerColormap(csImage['colorMap']);
           }
 
-          onSetHardnessbar(hcolormaps, csImage);
+          if (!isUndefined(csImage['colorMap'])) {
+            onSetHardnessbar(hcolormaps, csImage);
+          }
         }, 200);
       }
     } else {

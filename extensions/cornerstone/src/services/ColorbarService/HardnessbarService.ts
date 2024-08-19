@@ -116,6 +116,7 @@ export default class HardnessbarService extends PubSubService {
         },
         volumeId: viewport instanceof VolumeViewport ? volumeId : undefined,
       });
+      colorbar.onVoiChange = (voiRange) => {};
       colorbar._ticksBar.visible = false;
       colorbar._eventListenersManager.reset();
       colorbar._mouseDownCallback = undefined;
@@ -298,7 +299,7 @@ export default class HardnessbarService extends PubSubService {
     const minPixelElasticityValue = csImage['minPixelElasticityValue'];
     const maxPixelElasticityValue = csImage['maxPixelElasticityValue'];
     const minElasticityKpa = csImage['minElasticityKpa'];
-    const maxElasticityKpa = csImage['maxElasticityKpa'];
+    let maxElasticityKpa = csImage['maxElasticityKpa'];
 
     if (
       isUndefined(minPixelElasticityValue) ||
@@ -373,6 +374,7 @@ export default class HardnessbarService extends PubSubService {
     // 硬度值刻度
     let displayValues = [];
     // 需要显示的数值
+    maxElasticityKpa = parseFloat(maxElasticityKpa.toFixed(1));
     if (maxElasticityKpa >= 300) {
       displayValues = [maxElasticityKpa, 200, 100, 50, 30, 10, 5, 2, minElasticityKpa];
     } else if (maxElasticityKpa >= 200) {

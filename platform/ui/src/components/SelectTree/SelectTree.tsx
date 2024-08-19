@@ -215,7 +215,7 @@ export class SelectTree extends Component<PropType> {
               type={ButtonEnums.type.primary}
               onClick={this.onSubmitHandler}
             >
-              Save
+              保存
             </Button>
           </div>
         )}

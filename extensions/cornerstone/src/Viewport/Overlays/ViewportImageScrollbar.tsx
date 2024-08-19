@@ -226,9 +226,9 @@ function CornerstoneImageScrollbar({
         hcolormaps.push(csImage['colorMap']);
 
         onSetHardnessbar(hcolormaps, csImage);
-      },
-      1100,
-      { maxWait: 1100, leading: true, trailing: true }
+      }
+      // 1100,
+      // { maxWait: 1100, leading: true, trailing: true }
     );
 
     element.addEventListener(Enums.Events.STACK_VIEWPORT_SCROLL, updateStackIndex);
