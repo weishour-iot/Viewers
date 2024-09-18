@@ -311,7 +311,7 @@ function commandsModule({
             const grayPixelIndex = y * 404 + x;
             const grayPixelValue = grayPixelData[grayPixelIndex];
             const minValue = 1;
-            const maxValue = 1000;
+            const maxValue = 200;
             const grayPixelEValue =
               (grayPixelValue / 255) * (Math.log10(maxValue) - Math.log10(minValue)) +
               Math.log10(minValue);
@@ -621,7 +621,7 @@ function commandsModule({
       }
 
       const minValue = 1;
-      const maxValue = 1000;
+      const maxValue = 200;
       // 获取QME图像最小最大弹力log10的值
       csImage['minPixelGrayValue'] = SmallestImagePixelValue;
       csImage['maxPixelGrayValue'] = LargestImagePixelValue;

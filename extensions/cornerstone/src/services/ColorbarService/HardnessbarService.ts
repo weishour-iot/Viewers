@@ -383,6 +383,14 @@ export default class HardnessbarService extends PubSubService {
       displayValues = [maxElasticityKpa, 50, 30, 10, 5, 2, minElasticityKpa];
     } else if (maxElasticityKpa >= 50) {
       displayValues = [maxElasticityKpa, 30, 10, 5, 2, minElasticityKpa];
+    } else if (maxElasticityKpa >= 40) {
+      displayValues = [maxElasticityKpa, 30, 10, 5, 2, minElasticityKpa];
+    } else if (maxElasticityKpa >= 30) {
+      displayValues = [maxElasticityKpa, 20, 10, 5, 2, minElasticityKpa];
+    } else if (maxElasticityKpa >= 20) {
+      displayValues = [maxElasticityKpa, 10, 5, 2, minElasticityKpa];
+    } else if (maxElasticityKpa >= 10) {
+      displayValues = [maxElasticityKpa, 5, 2, minElasticityKpa];
     }
 
     const eKpaDom: HTMLElement = document.createElement('div');
@@ -428,7 +436,9 @@ export default class HardnessbarService extends PubSubService {
       const percentage =
         (maxPixelElasticityValue - logValue) / (maxPixelElasticityValue - minPixelElasticityValue);
 
-      if (index === displayValues.length - 1) {
+      if (index === 0) {
+        eKpaXSpanDom.style.transform = 'translateY(-8%)';
+      } else if (index === displayValues.length - 1) {
         eKpaXSpanDom.style.transform = 'translateY(-100%)';
       }
       eKpaXSpanDom.innerText = '-';
