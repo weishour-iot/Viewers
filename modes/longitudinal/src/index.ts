@@ -106,6 +106,7 @@ function modeFactory({ modeConfiguration }) {
         // 'Crosshairs',
         'TagBrowser',
         'Probe',
+        'ImageOverlayViewer',
         'MoreTools',
       ]);
 

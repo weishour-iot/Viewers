@@ -213,6 +213,16 @@ const toolbarButtons: Button[] = [
       evaluate: 'evaluate.cornerstoneTool',
     },
   },
+  {
+    id: 'ImageOverlayViewer',
+    uiType: 'ohif.radioGroup',
+    props: {
+      icon: 'toggle-dicom-overlay',
+      label: 'Image Overlay',
+      commands: 'toggleEnabledDisabledToolbar',
+      evaluate: 'evaluate.cornerstoneTool.toggle',
+    },
+  },
 ];
 
 export default toolbarButtons;

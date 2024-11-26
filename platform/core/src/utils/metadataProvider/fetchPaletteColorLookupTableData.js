@@ -63,7 +63,11 @@ function _getPaletteColor(paletteColorLookupTableData, lutDescriptor) {
 
   if (paletteColorLookupTableData.retrieveBulkData) {
     return paletteColorLookupTableData
-      .retrieveBulkData()
+      .retrieveBulkData({
+        BulkDataURI: paletteColorLookupTableData.BulkDataURI,
+        multipart: false,
+        mediaTypes: [{ mediaType: 'application/*' }],
+      })
       .then(val => (paletteColorLookupTableData.palette = arrayBufferToPaletteColorLUT(val)));
   }
 

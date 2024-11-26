@@ -57,11 +57,68 @@ class ImageOverlayViewerTool extends AnnotationDisplayTool {
     return targetId.split('imageId:')[1];
   }
 
-  renderAnnotation = (enabledElement, svgDrawingHelper) => {
+  renderAnnotation = async (enabledElement, svgDrawingHelper) => {
     const { viewport } = enabledElement;
+
+    if (this.mode !== 'Enabled') {
+      return;
+    }
 
     const imageId = this.getReferencedImageId(viewport);
     if (!imageId) {
+      return;
+    }
+
+    // 自定义获取覆盖图像处理
+    const { displaySetService } = window.services;
+    const instance = metaData.get('instance', imageId);
+    const { SeriesInstanceUID } = instance;
+    const activeDisplaySets = displaySetService.getActiveDisplaySets();
+    const videoDisplaySets = activeDisplaySets.filter(
+      displaySet =>
+        displaySet.getNumImages() === 1 && displaySet.SeriesDescription.includes('VIDEO')
+    );
+    if (videoDisplaySets?.length) {
+      ImageOverlayViewerTool.addOverlayPlaneModule(
+        imageId,
+        metaData.get('overlayPlaneModule', imageId)
+      );
+
+      const videoDisplaySet = videoDisplaySets[0];
+      const {
+        SeriesInstanceUID: vSeriesInstanceUID,
+        PixelData,
+        Columns,
+        Rows,
+      } = videoDisplaySet.instance;
+      if (SeriesInstanceUID === vSeriesInstanceUID) {
+        return;
+      }
+      if (PixelData) {
+        const retrieveBulkData = PixelData.retrieveBulkData;
+
+        if (retrieveBulkData) {
+          const arrayBuffer = await retrieveBulkData({
+            BulkDataURI: PixelData.BulkDataURI,
+            multipart: false,
+            mediaTypes: [{ mediaType: 'application/*' }],
+          });
+          const pixelData = new Uint8Array(arrayBuffer);
+          const dataUrl = this._renderVideoOverlayToDataUrl(
+            { width: Columns, height: Rows },
+            pixelData,
+            200
+          );
+          this._renderOverlay(enabledElement, svgDrawingHelper, {
+            _id: guid(),
+            columns: Columns,
+            rows: Rows,
+            x: 1,
+            y: 1,
+            dataUrl,
+          });
+        }
+      }
       return;
     }
 
@@ -128,6 +185,7 @@ class ImageOverlayViewerTool extends AnnotationDisplayTool {
       x: overlayTopLeftOnCanvas[0],
       y: overlayTopLeftOnCanvas[1],
       href: overlayData.dataUrl,
+      // opacity: 0.5,
     };
 
     if (
@@ -147,6 +205,12 @@ class ImageOverlayViewerTool extends AnnotationDisplayTool {
       const newImageElement = document.createElementNS(svgns, 'image');
       drawing.setNewAttributesIfValid(attributes, newImageElement);
       svgDrawingHelper.appendNode(newImageElement, svgNodeHash);
+
+      // 调整顺序，将新节点插入到头部
+      const parentSvg = svgDrawingHelper.getSvgNode(svgNodeHash).parentNode;
+      if (parentSvg && parentSvg.firstChild) {
+        parentSvg.insertBefore(newImageElement, parentSvg.firstChild);
+      }
     }
     return true;
   }
@@ -173,7 +237,11 @@ class ImageOverlayViewerTool extends AnnotationDisplayTool {
           } else if (overlay.pixelData instanceof Array) {
             pixelData = overlay.pixelData[0];
           } else if (overlay.pixelData.retrieveBulkData) {
-            pixelData = await overlay.pixelData.retrieveBulkData();
+            pixelData = await overlay.pixelData.retrieveBulkData({
+              BulkDataURI: overlay.pixelData.BulkDataURI,
+              multipart: false,
+              mediaTypes: [{ mediaType: 'application/*' }],
+            });
           } else if (overlay.pixelData.InlineBinary) {
             const blob = b64toBlob(overlay.pixelData.InlineBinary);
             const arrayBuffer = await blob.arrayBuffer();
@@ -260,6 +328,35 @@ class ImageOverlayViewerTool extends AnnotationDisplayTool {
         bitIdx++;
       }
     }
+    ctx.putImageData(imageData, 0, 0);
+
+    return canvas.toDataURL();
+  }
+
+  private _renderVideoOverlayToDataUrl({ width, height }, pixelDataRaw, alpha = 128) {
+    const totalPixels = width * height;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, width, height); // 清除画布，确保透明背景
+    ctx.globalCompositeOperation = 'copy';
+
+    const imageData = ctx.getImageData(0, 0, width, height);
+    const data = imageData.data;
+
+    // pixelDataRaw 应包含连续的 RGB 数据，每个像素占 3 个字节（R、G、B）
+    for (let i = 0; i < totalPixels; i++) {
+      const pixelOffset = i * 3; // 每个像素有 3 个字节：R、G、B
+
+      data[i * 4] = pixelDataRaw[pixelOffset]; // Red
+      data[i * 4 + 1] = pixelDataRaw[pixelOffset + 1]; // Green
+      data[i * 4 + 2] = pixelDataRaw[pixelOffset + 2]; // Blue
+      data[i * 4 + 3] = alpha; // Alpha (透明度)
+    }
+
     ctx.putImageData(imageData, 0, 0);
 
     return canvas.toDataURL();

@@ -99,8 +99,9 @@ function initDefaultToolGroup(
         toolName: toolNames.ScaleOverlay,
         configuration: { scaleLocation: 'left' },
       },
+      { toolName: toolNames.ImageOverlayViewer },
     ],
-    enabled: [{ toolName: toolNames.ImageOverlayViewer }, { toolName: toolNames.ReferenceLines }],
+    enabled: [{ toolName: toolNames.ReferenceLines }],
     disabled: [
       {
         toolName: toolNames.AdvancedMagnify,
