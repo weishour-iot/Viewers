@@ -31,9 +31,9 @@ window.config = {
       configuration: {
         friendlyName: '本地 Orthanc DICOMWeb 服务器',
         name: 'DCM4CHEE',
-        wadoUriRoot: 'http://192.168.0.25:8042/dicom-web',
-        qidoRoot: 'http://192.168.0.25:8042/dicom-web',
-        wadoRoot: 'http://192.168.0.25:8042/dicom-web',
+        wadoUriRoot: 'http://127.0.0.1:8042/dicom-web',
+        qidoRoot: 'http://127.0.0.1:8042/dicom-web',
+        wadoRoot: 'http://127.0.0.1:8042/dicom-web',
         // wadoUriRoot: 'http://192.168.0.8:8042/dicom-web',
         // qidoRoot: 'http://192.168.0.8:8042/dicom-web',
         // wadoRoot: 'http://192.168.0.8:8042/dicom-web',
