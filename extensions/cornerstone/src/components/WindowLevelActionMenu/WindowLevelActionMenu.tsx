@@ -181,7 +181,7 @@ export function WindowLevelActionMenu({
       }
 
       const minValue = 1;
-      const maxValue = 200;
+      const maxValue = 1000;
       // 获取QME图像最小最大弹力log10的值
       csImage['minPixelGrayValue'] = SmallestImagePixelValue;
       csImage['maxPixelGrayValue'] = LargestImagePixelValue;

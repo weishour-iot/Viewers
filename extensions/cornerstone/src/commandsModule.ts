@@ -307,11 +307,13 @@ function commandsModule({
           const grayPixelData = new Uint8Array(FloatPixelData.Value);
           const x = index[0];
           const y = index[1];
-          if (x >= 0 && x <= 403 && y >= 0 && y <= 403) {
-            const grayPixelIndex = y * 404 + x;
+          const Columns = metaData.get('Columns', targetArray[1]);
+          const Rows = metaData.get('Rows', targetArray[1]);
+          if (x >= 0 && x <= Columns - 1 && y >= 0 && y <= Rows - 1) {
+            const grayPixelIndex = y * Rows + x;
             const grayPixelValue = grayPixelData[grayPixelIndex];
             const minValue = 1;
-            const maxValue = 200;
+            const maxValue = 1000;
             const grayPixelEValue =
               (grayPixelValue / 255) * (Math.log10(maxValue) - Math.log10(minValue)) +
               Math.log10(minValue);
@@ -621,7 +623,7 @@ function commandsModule({
       }
 
       const minValue = 1;
-      const maxValue = 200;
+      const maxValue = 1000;
       // 获取QME图像最小最大弹力log10的值
       csImage['minPixelGrayValue'] = SmallestImagePixelValue;
       csImage['maxPixelGrayValue'] = LargestImagePixelValue;
